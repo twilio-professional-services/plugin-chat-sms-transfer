@@ -40,10 +40,11 @@ export default class ChatTransferTab extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.submitTransfer = this.submitTransfer.bind(this);
+    this.serviceUrl = this.prepServiceBaseUrl(this.props.manager.configuration.serviceBaseUrl);
   }
 
   componentDidMount() {
-    fetch(`${window.appConfig.serviceBaseUrl}/list-all-queues`)
+    fetch(`${this.serviceUrl}list-all-queues`)
       .then(response => {
         return response.json()
       })
@@ -59,7 +60,7 @@ export default class ChatTransferTab extends React.Component {
   };
 
   submitTransfer() {
-    fetch(`${window.appConfig.serviceBaseUrl}/transfer-chat`, {
+    fetch(`${this.serviceUrl}transfer-chat`, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
@@ -72,6 +73,18 @@ export default class ChatTransferTab extends React.Component {
       .catch(error => {
         console.log(error);
       });
+  }
+
+  prepServiceBaseUrl(url) {
+    // prepend https if it doesn't exist
+    if (!url.startsWith('https://')) {
+      url = 'https://'+url;
+    }
+    // append a trailing slash if it doesn't exist
+    if (url.substr(-1) !== '/') {
+      url = url+'/';
+    }
+    return url;
   }
 
   render() {
