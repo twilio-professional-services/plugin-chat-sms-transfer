@@ -40,7 +40,7 @@ export default class ChatTransferTab extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.submitTransfer = this.submitTransfer.bind(this);
-    this.serviceUrl = this.prepServiceBaseUrl(this.props.manager.configuration.serviceBaseUrl);
+    this.serviceUrl = this.prepServiceBaseUrl(this.props.manager.serviceConfiguration.runtime_domain);
   }
 
   componentDidMount() {
