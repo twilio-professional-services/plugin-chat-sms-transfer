@@ -21,7 +21,7 @@ export default class ChatTransferPlugin extends FlexPlugin {
       <ChatTransferTab key="chat-transfer-tab" manager={manager} label="Transfer" />,
       {
         sortOrder: 3,
-        if: props => props.task.source.taskChannelUniqueName === "chat" && props.task.source.status === 'assigned'
+        if: props => props.channelDefinition.capabilities.has("Chat") && props.task.taskStatus === 'assigned'
       }
     );
   }

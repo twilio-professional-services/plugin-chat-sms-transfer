@@ -53,8 +53,9 @@ exports.handler = function(context, event, callback) {
         .workspaces(context.TWILIO_WORKSPACE_SID)
         .tasks
         .create({
-            taskChannel: "chat",
-            attributes: JSON.stringify(newAttributes)
+            taskChannel: task.taskChannelUniqueName,
+            attributes: JSON.stringify(newAttributes),
+            workflowSid: context.TWILIO_WORKFLOW_SID
         }).then(task => {
 
             // complete old task
