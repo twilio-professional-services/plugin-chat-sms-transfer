@@ -1,8 +1,8 @@
-# Flex Transfer Chat Plugin
+# Flex Transfer Chat/SMS Plugin
 
 ![Chat Transfer UI](https://indigo-bombay-5783.twil.io/assets/chat-transfer-ui.jpg)
 
-**As of the writing of this document, Flex does not natively support transferring of chat tasks. It is on the roadmap and when its released you should migrate to that solution.**
+**As of the writing of this document, Flex does not natively support transferring of non-voice tasks. It is on the roadmap and when its released you should migrate to that solution.**
 
 ---
 
