@@ -44,7 +44,13 @@ export default class ChatTransferTab extends React.Component {
   }
 
   componentDidMount() {
-    fetch(`${this.serviceUrl}list-all-queues`)
+    fetch(`${this.serviceUrl}list-all-queues`, {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      method: 'POST',
+      body: `Token=${this.props.manager.user.token}`
+    })
       .then(response => {
         return response.json()
       })
@@ -65,7 +71,7 @@ export default class ChatTransferTab extends React.Component {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
         method: 'POST',
-        body: `taskSid=${this.props.task.taskSid}&destinationQueue=${this.state.queue}&workerName=${this.props.manager.user.identity}`
+        body: `Token=${this.props.manager.user.token}&taskSid=${this.props.task.taskSid}&destinationQueue=${this.state.queue}&workerName=${this.props.manager.user.identity}`
       })
       .then(response => {
         console.log('Task Successfully Transfered');

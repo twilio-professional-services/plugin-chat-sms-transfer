@@ -1,4 +1,10 @@
-exports.handler = function(context, event, callback) {
+// be sure to configure your function runtime with the `twilio-flex-token-validator` npm package
+// https://www.twilio.com/console/runtime/functions/configure
+// twilio-flex-token-validator:*
+
+const JWEValidator = require('twilio-flex-token-validator').functionValidator;
+
+exports.handler = JWEValidator(function(context, event, callback) {
 
   const response = new Twilio.Response();
   response.appendHeader('Access-Control-Allow-Origin', '*');
@@ -25,4 +31,4 @@ exports.handler = function(context, event, callback) {
   }).catch(e => {
       callback(e);
   })
-};
+});
