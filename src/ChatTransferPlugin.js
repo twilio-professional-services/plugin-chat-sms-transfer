@@ -25,23 +25,9 @@ export default class ChatTransferPlugin extends FlexPlugin {
 
     function transferOverride (payload, original, task) {
       console.log(payload);
-      console.log(original);
-      console.log(task);
+      // payload.task is always empty!
       return new Promise((resolve, reject) => {
         reject();
-        // fetch(`${window.appConfig.serviceBaseUrl}/transfer-chat`, {
-        //   headers: {
-        //     'Content-Type': 'application/x-www-form-urlencoded'
-        //   },
-        //   method: 'POST',
-        //   body: `taskSid=${task.taskSid}&destinationQueue=${payload.targetSid}&workerName=${manager.user.identity}`
-        // })
-        // .then(response => {
-        //   resolve('Task Successfully Transfered')
-        // })
-        // .catch(error => {
-        //   reject(error);
-        // });
       })
     }
 
