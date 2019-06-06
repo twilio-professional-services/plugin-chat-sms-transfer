@@ -19,19 +19,38 @@ export default class ChatTransferPlugin extends FlexPlugin {
   init(flex, manager) {
     flex.TaskCanvasHeader.Content.add(
       <ChatTransferButton key="chat-transfer-button" />, {
-        if: props => props.task.source.taskChannelUniqueName === "chat" && props.task.source.status === 'assigned'
+        if: props => props.channelDefinition.capabilities.has("Chat") && props.task.taskStatus === 'assigned'
       }
     );
 
-    function transferOverride (payload, original, task) {
-      console.log(payload);
-      // payload.task is always empty!
+    flex.Actions.replaceAction("TransferTask", (payload, original) => transferOverride(payload, original))
+
+    function transferOverride (payload, original) {
+      if (payload.task.taskChannelUniqueName === "voice") {
+        return original(payload);
+      }
+
+      // would prefer to be able to do this on chat tasks!
+      // return payload.task.transfer(payload.targetSid, { mode: 'COLD' });
+
       return new Promise((resolve, reject) => {
-        reject();
+        fetch(`https://${manager.serviceConfiguration.runtime_domain}/transfer-chat`, {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          method: 'POST',
+          body: `Token=${manager.user.token}&taskSid=${payload.task.taskSid}&destinationQueue=${payload.targetSid}&workerName=${manager.user.identity}`
+        })
+        .then(response => {
+          console.log('Task Successfully Transfered');
+          resolve();
+        })
+        .catch(error => {
+          console.log(error);
+          reject();
+        });
       })
     }
-
-    flex.Actions.replaceAction("TransferTask", (payload, original) => transferOverride(payload, original, props => props.task))
 
   }
 }
