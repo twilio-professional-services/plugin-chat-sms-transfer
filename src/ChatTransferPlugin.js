@@ -17,8 +17,10 @@ export default class ChatTransferPlugin extends FlexPlugin {
    * @param manager { import('@twilio/flex-ui').Manager }
    */
   init(flex, manager) {
-    flex.TaskCanvasHeader.Content.add(
-      <ChatTransferButton key="chat-transfer-button" />, {
+    flex.TaskCanvasTabs.Content.add(
+      <ChatTransferTab key="chat-transfer-tab" flex={flex} manager={manager} label="Transfer" />,
+      {
+        sortOrder: 3,
         if: props => props.channelDefinition.capabilities.has("Chat") && props.task.taskStatus === 'assigned'
       }
     );
@@ -30,10 +32,10 @@ export default class ChatTransferPlugin extends FlexPlugin {
         return original(payload);
       }
 
-      // would prefer to be able to do this on chat tasks!
-      // return payload.task.transfer(payload.targetSid, { mode: 'COLD' });
-
       return new Promise((resolve, reject) => {
+        flex.ChatOrchestrator.setOrchestrations("wrapup", []);
+        flex.ChatOrchestrator.setOrchestrations("completed", ["LeaveChatChannel"]);
+
         fetch(`https://${manager.serviceConfiguration.runtime_domain}/transfer-chat`, {
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
@@ -43,10 +45,14 @@ export default class ChatTransferPlugin extends FlexPlugin {
         })
         .then(response => {
           console.log('Task Successfully Transfered');
+          flex.ChatOrchestrator.setOrchestrations("wrapup", ["DeactivateChatChannel"]);
+          flex.ChatOrchestrator.setOrchestrations("completed", ["DeactivateChatChannel", "LeaveChatChannel"]);
           resolve();
         })
         .catch(error => {
           console.log(error);
+          flex.ChatOrchestrator.setOrchestrations("wrapup", ["DeactivateChatChannel"]);
+          flex.ChatOrchestrator.setOrchestrations("completed", ["DeactivateChatChannel", "LeaveChatChannel"]);
           reject();
         });
       })

@@ -7,7 +7,6 @@ var accountSid = 'accountSid';
 var pluginServiceUrl = '/plugins.json';
 
 var appConfig = {
-  serviceBaseUrl: '<your twilio run-time url>',
   pluginService: {
     enabled: true,
     url: pluginServiceUrl,

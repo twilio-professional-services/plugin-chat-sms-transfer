@@ -10,7 +10,7 @@
     "eject": "react-app-rewired eject"
   },
   "devDependencies": {
-    "@twilio/flex-ui": "^1",
+    "@twilio/flex-ui": ">=1.9",
     "react-app-rewire-flex-plugin": "^1",
     "react-app-rewired": "^1.6.2"
   },
