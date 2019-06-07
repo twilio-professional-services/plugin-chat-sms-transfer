@@ -27,7 +27,7 @@ export default class ChatTransferPlugin extends FlexPlugin {
     flex.Actions.replaceAction("TransferTask", (payload, original) => transferOverride(payload, original))
 
     function transferOverride (payload, original) {
-      if (payload.task.taskChannelUniqueName === "voice") {
+      if (!flex.TaskHelper.isChatBasedTask(payload.task)) {
         return original(payload);
       }
 
