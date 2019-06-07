@@ -17,13 +17,12 @@ export default class ChatTransferPlugin extends FlexPlugin {
    * @param manager { import('@twilio/flex-ui').Manager }
    */
   init(flex, manager) {
-    flex.TaskCanvasTabs.Content.add(
-      <ChatTransferTab key="chat-transfer-tab" flex={flex} manager={manager} label="Transfer" />,
-      {
-        sortOrder: 3,
+    flex.TaskCanvasHeader.Content.add(
+      <ChatTransferButton key="chat-transfer-button" />, {
         if: props => props.channelDefinition.capabilities.has("Chat") && props.task.taskStatus === 'assigned'
       }
     );
+
 
     flex.Actions.replaceAction("TransferTask", (payload, original) => transferOverride(payload, original))
 
