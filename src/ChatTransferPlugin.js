@@ -18,7 +18,7 @@ export default class ChatTransferPlugin extends FlexPlugin {
    */
   init(flex, manager) {
     flex.TaskCanvasTabs.Content.add(
-      <ChatTransferTab key="chat-transfer-tab" manager={manager} label="Transfer" />,
+      <ChatTransferTab key="chat-transfer-tab" flex={flex} manager={manager} label="Transfer" />,
       {
         sortOrder: 3,
         if: props => props.channelDefinition.capabilities.has("Chat") && props.task.taskStatus === 'assigned'

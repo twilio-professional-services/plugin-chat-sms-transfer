@@ -40,6 +40,8 @@ export default class ChatTransferTab extends React.Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.submitTransfer = this.submitTransfer.bind(this);
+    this.removeDefaultChatChannelOrchestration = this.removeDefaultChatChannelOrchestration.bind(this);
+    this.restoreDefaultChatChannelOrchestration = this.restoreDefaultChatChannelOrchestration.bind(this);
     this.serviceUrl = this.prepServiceBaseUrl(this.props.manager.serviceConfiguration.runtime_domain);
   }
 
@@ -65,8 +67,68 @@ export default class ChatTransferTab extends React.Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  removeDefaultChatChannelOrchestration() {
+    return new Promise((resolve, reject) => {
+      this.props.flex.ChatOrchestrator.setOrchestrations("wrapup", []);
+      console.log(this.props.flex.ChatOrchestrator.events.wrapup.size);
+      this.props.flex.ChatOrchestrator.setOrchestrations("completed", ["LeaveChatChannel"]);
+      console.log('polling to remove default orchestration');
+      let maxAttempts = 50;
+      let interval = setInterval(() => {
+        console.log(this.props.flex.ChatOrchestrator.events.wrapup.size);
+        if (
+          this.props.flex.ChatOrchestrator.events.wrapup.size === 0 &&
+          this.props.flex.ChatOrchestrator.events.completed.size === 1 &&
+          this.props.flex.ChatOrchestrator.events.completed.has("LeaveChatChannel")
+        ) {
+          console.log('polling complete');
+          clearInterval(interval);
+          return resolve();
+        }
+
+        if (maxAttempts === 0) {
+          console.log('polling failed to remove default orchestration');
+          clearInterval(interval);
+          return reject();
+        }
+
+        console.log('decrementing maxAttempts')
+        maxAttempts--;
+        console.log(maxAttempts);
+      }, 50);
+    })
+  }
+
+  restoreDefaultChatChannelOrchestration() {
+    return new Promise((resolve, reject) => {
+      this.props.flex.ChatOrchestrator.setOrchestrations("wrapup", ["DeactivateChatChannel"]);
+      this.props.flex.ChatOrchestrator.setOrchestrations("completed", ["DeactivateChatChannel", "LeaveChatChannel"]);
+
+      let maxAttempts = 50;
+      let interval = setInterval(() => {
+        if (
+          this.props.flex.ChatOrchestrator.events.wrapup.has("DeactivateChatChannel") &&
+          this.props.flex.ChatOrchestrator.events.completed.size === 2 &&
+          this.props.flex.ChatOrchestrator.events.completed.has("DeactivateChatChannel") &&
+          this.props.flex.ChatOrchestrator.events.completed.has("LeaveChatChannel")
+        ) {
+          clearInterval(interval);
+          resolve();
+        }
+
+        if (maxAttempts === 0) {
+          clearInterval(interval);
+          reject();
+        }
+
+        maxAttempts--;
+      }, 50);
+    })
+  }
+
   submitTransfer() {
-    fetch(`${this.serviceUrl}transfer-chat`, {
+    this.removeDefaultChatChannelOrchestration().then(() => {
+      fetch(`${this.serviceUrl}transfer-chat`, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
@@ -74,11 +136,16 @@ export default class ChatTransferTab extends React.Component {
         body: `Token=${this.props.manager.user.token}&taskSid=${this.props.task.taskSid}&destinationQueue=${this.state.queue}&workerName=${this.props.manager.user.identity}`
       })
       .then(response => {
-        console.log('Task Successfully Transfered');
+        this.restoreDefaultChatChannelOrchestration().then(() => {
+          console.log('Task Successfully Transfered');
+        })
       })
       .catch(error => {
-        console.log(error);
+        this.restoreDefaultChatChannelOrchestration().then(() => {
+          console.log(error);
+        })
       });
+    })
   }
 
   prepServiceBaseUrl(url) {
