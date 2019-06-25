@@ -7,25 +7,25 @@
 ---
 
 ## Details
+
+**This plugin requires Flex v1.9 and above.**
+
 This plugin will add a transfer button near the End Chat button. Clicking this button will open the default worker/queue directory. Upon selecting a Queue, this plugin will initiate a blind transfer of the chat task to the specified queue.
 
-Because Flex does not yet support transfering Chat/SMS tasks natively, this plugin works by creating a new task and routing it through your workflow as normal. The original task is automatically completed by
+Because Flex does not yet support transfering Chat/SMS tasks natively, this plugin works by creating a new task and routing it through your workflow as normal. The original task is automatically completed by the provided function, and all subsequent "transfer" tasks are linked to the original task to be compatible with WFO reporting.
 
 It is up to you to implement the necessary Task Router routing rules to send the task to the specified queue. To aid you in this, two new attributes will be added to your tasks: `ignoreAgent` and `requiredQueue`. 
 
 The selected queue sid will be populated in the `requiredQueue` attribute, and the agent that initiated the transfer will be added to the `ignoreAgent` attribute - this will aid you in ensuring that the last agent to transfer the task will not receive the transfer they initiated.
 
-## Required Flex Version
-This plugin requires Flex v1.9 and above. 
-
-## Prerequisite Function
+### Prerequisite Function
 
 There is a single function Located in `src/functions` that you are expected to implement in the [Twilio Functions Runtime](https://www.twilio.com/functions), or to replicate in your own backend application.
 
-### Required Env Variables in your Function
+##### Required Env Variables in your Function
 The provided functions in their current state are looking for your TaskRouter Workspace Sid in the `TWILIO_WORKSPACE_SID` variable. Please ensure this is set in your Twilio Function configuration.
 
-### Required NPM Package for your Function Environment
+##### Required NPM Package for your Function Environment
 This plugin uses a Twilio function to actually perform the "transfer" of the chat task. If you use the [Twilio Functions Runtime](https://www.twilio.com/functions) you'll want to validate that the incoming requests to your function are actually coming from a Flex front-end. 
 
 This plugin will send the Flex user's token along with the task information to transfer, upon validating the token, it will intiate the transfer. This plugin expects that you've [configured your Twilio Functions Runtime](https://www.twilio.com/console/runtime/functions/configure) dependencies and added the `twilio-flex-token-validator` package.
