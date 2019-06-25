@@ -32,8 +32,7 @@ export default class ChatTransferPlugin extends FlexPlugin {
       }
 
       return new Promise((resolve, reject) => {
-        flex.ChatOrchestrator.setOrchestrations("wrapup", []);
-        flex.ChatOrchestrator.setOrchestrations("completed", ["LeaveChatChannel"]);
+        removeDefaultChatChannelOrchestrations();
 
         fetch(`https://${manager.serviceConfiguration.runtime_domain}/transfer-chat`, {
           headers: {
@@ -44,17 +43,25 @@ export default class ChatTransferPlugin extends FlexPlugin {
         })
         .then(response => {
           console.log('Task Successfully Transfered');
-          flex.ChatOrchestrator.setOrchestrations("wrapup", ["DeactivateChatChannel"]);
-          flex.ChatOrchestrator.setOrchestrations("completed", ["DeactivateChatChannel", "LeaveChatChannel"]);
+          restoreDefaultChatChannelOrchestrations();
           resolve();
         })
         .catch(error => {
           console.log(error);
-          flex.ChatOrchestrator.setOrchestrations("wrapup", ["DeactivateChatChannel"]);
-          flex.ChatOrchestrator.setOrchestrations("completed", ["DeactivateChatChannel", "LeaveChatChannel"]);
+          restoreDefaultChatChannelOrchestrations();
           reject();
         });
       })
+    }
+
+    function removeDefaultChatChannelOrchestrations() {
+      flex.ChatOrchestrator.setOrchestrations("wrapup", []);
+      flex.ChatOrchestrator.setOrchestrations("completed", ["LeaveChatChannel"]);
+    }
+
+    function restoreDefaultChatChannelOrchestrations() {
+      flex.ChatOrchestrator.setOrchestrations("wrapup", ["DeactivateChatChannel"]);
+      flex.ChatOrchestrator.setOrchestrations("completed", ["DeactivateChatChannel", "LeaveChatChannel"]);
     }
 
   }
