@@ -44,22 +44,21 @@ exports.handler = JWEValidator(async function(context, event, callback) {
     // and ensure the task makes it to the correct agent/queue
     newAttributes.requiredQueue = destinationQueueSid;
 
-        // create New task
+    // create New task
     let newTask = await client.taskrouter.workspaces(context.TWILIO_WORKSPACE_SID).tasks.create({
         taskChannel: originalTask.taskChannelUniqueName,
         attributes: JSON.stringify(newAttributes)
     });
 
-            // complete old task
+    // complete old task
     let completedTask = await client.taskrouter.workspaces(context.TWILIO_WORKSPACE_SID).tasks(originalTaskSid).update({
         assignmentStatus: 'completed',
         reason: 'task transferred'
     });
 
-    let completedTaskChannelSid = JSON.parse(completedTask.attributes).channelSid;
-
     response.setBody({
         taskSid: newTask.sid
     });
+
     callback(null, response);
 });
