@@ -58,12 +58,6 @@ exports.handler = JWEValidator(async function(context, event, callback) {
 
     let completedTaskChannelSid = JSON.parse(completedTask.attributes).channelSid;
 
-    // update chat channel to active again
-    //let channel = await client.chat.services(context.TWILIO_FLEX_CHAT_SERVICE_SID).channels(completedTaskChannelSid).fetch();
-    //let updatedChannel = await client.chat.services(context.TWILIO_FLEX_CHAT_SERVICE_SID).channels(channel.sid).update({
-    //    attributes: JSON.stringify(Object.assign(JSON.parse(channel.attributes), {'status': 'ACTIVE'}))
-    //})
-
     response.setBody({
         taskSid: newTask.sid
     });
