@@ -59,5 +59,6 @@ exports.handler = JWEValidator(async function(context, event, callback) {
     response.setBody({
         taskSid: newTask.sid
     });
+
     callback(null, response);
 });
