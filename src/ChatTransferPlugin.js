@@ -43,12 +43,16 @@ export default class ChatTransferPlugin extends FlexPlugin {
         })
         .then(response => {
           console.log('Task Successfully Transfered');
-          restoreDefaultChatChannelOrchestrations();
+          setTimeout(() => {
+            restoreDefaultChatChannelOrchestrations();
+          }, 2000)
           resolve();
         })
         .catch(error => {
           console.log(error);
-          restoreDefaultChatChannelOrchestrations();
+          setTimeout(() => {
+            restoreDefaultChatChannelOrchestrations();
+          }, 2000)
           reject();
         });
       })
