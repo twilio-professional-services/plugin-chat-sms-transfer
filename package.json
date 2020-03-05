@@ -6,11 +6,18 @@
     "prestart": "flex-check-start",
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
-    "test": "react-app-rewired test --env=jsdom",
+    "test": "jest",
     "eject": "react-app-rewired eject"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.8.7",
+    "@babel/preset-react": "^7.8.3",
     "@twilio/flex-ui": ">=1.9",
+    "babel-jest": "^25.1.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
+    "jest": "^25.1.0",
+    "jest-fetch-mock": "^3.0.2",
     "react-app-rewire-flex-plugin": "^1",
     "react-app-rewired": "^1.6.2"
   },

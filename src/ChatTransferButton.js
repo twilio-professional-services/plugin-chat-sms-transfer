@@ -1,5 +1,5 @@
 import React from 'react';
-import { Actions, Button } from "@twilio/flex-ui";
+import { Actions } from "@twilio/flex-ui";
 
 export default class ChatTransferButton extends React.Component {
   openDirectory() {
@@ -7,6 +7,6 @@ export default class ChatTransferButton extends React.Component {
   }
 
   render() {
-    return <Button onClick={ this.openDirectory }>Transfer</Button>
+    return <button onClick={ this.openDirectory }>Transfer</button>
   }
 }
