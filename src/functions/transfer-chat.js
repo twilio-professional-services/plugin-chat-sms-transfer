@@ -44,6 +44,13 @@ exports.handler = JWEValidator(async function(context, event, callback) {
     // and ensure the task makes it to the correct agent/queue
     newAttributes.requiredQueue = destinationQueueSid;
 
+    // create New task
+    let newTask = await client.taskrouter.workspaces(context.TWILIO_WORKSPACE_SID).tasks.create({
+        workflowSid: context.TWILIO_WORKFLOW_SID,
+        taskChannel: originalTask.taskChannelUniqueName,
+        attributes: JSON.stringify(newAttributes)
+    });
+
     // Set the channelSid and ProxySessionSID to a dummy value. This keeps the session alive
     let updatedAttributes = {
       ...JSON.parse(originalTask.attributes),
