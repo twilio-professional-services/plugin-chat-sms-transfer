@@ -1,5 +1,5 @@
 {
-	"name": "plugin-chat-transfer",
+	"name": "plugin-chat-sms-transfer",
 	"version": "1.0.0",
 	"private": true,
 	"scripts": {
@@ -20,8 +20,6 @@
 	"devDependencies": {
 		"@twilio/flex-ui": "^1",
 		"babel-polyfill": "^6.26.0",
-		"enzyme": "^3.10.0",
-		"enzyme-adapter-react-16": "^1.14.0",
 		"rimraf": "^3.0.0"
 	},
 	"dependencies": {
