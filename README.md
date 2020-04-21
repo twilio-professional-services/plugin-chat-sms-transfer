@@ -1,6 +1,6 @@
 # Flex Transfer Chat/SMS Plugin
 
-![Chat Transfer UI](https://indigo-bombay-5783.twil.io/assets/chat-transfer-ui.jpg)
+![Chat Transfer UI](https://indigo-bombay-5783.twil.io/assets/chat-transfer.gif)
 
 **As of the writing of this document, Flex does not natively support transferring of non-voice tasks. It is on the roadmap and when its released you should migrate to that solution.**
 
@@ -12,11 +12,15 @@ This plugin will add a transfer button near the End Chat button. Clicking this b
 
 Because Flex does not yet support transfering Chat/SMS tasks natively, this plugin works by creating a new task and routing it through your workflow as normal. These subsequent "transfer" tasks are linked to the original task to be compatible with Flex Insights reporting.
 
-It is up to you to implement the necessary Task Router routing rules to send the task to the specified queue. To aid you in this, three new attributes will be added to your tasks: `ignoreAgent`, `targetSid`, and `transferTargetType`.
+This plugin supports both warm and cold transfers to queues and workers.
+
+It is up to you to implement the necessary Task Router routing rules to send the task to the specified queue or worker. To aid you in this, three new attributes will be added to your tasks: `ignoreAgent`, `targetSid`, and `transferTargetType`.
 
 The sid of the worker OR queue will be populated in the `targetSid` attribute. The `functions/transfer-chat.js` function uses this value to determine if you are transfering the task to a worker or queue.
 
-Upon parsing where you are attempting to transfer the task, the `functions/transfer-chat.js` function will add a `transferTargetType` attribute to the task with the possible values of `worker` or `queue`. This lets your workflow target the task to the appropriate queue. If you are trying to route the task to a specific worker, we recommend you have a queue like the "Everyone" queue where all workers are members of the queue. Use the `targetSid` to target the worker that should be the recipient of the transfer.
+Upon parsing where you are attempting to transfer the task, the `functions/transfer-chat.js` function will add a `transferTargetType` attribute to the task with the possible values of `worker` or `queue`. This lets your workflow target the task to the appropriate queue.
+
+If you are trying to route the task to a specific worker, we recommend you have a queue like the "Everyone" queue where all workers are members of the queue. Use the `targetSid` to target the worker that should be the recipient of the transfer.
 
 The agent that initiated the transfer will be added to
 the `ignoreAgent` attribute - this will aid you in ensuring that the last agent to transfer the task will not receive the transfer they initiated, _assuming they are transfering the Task to a queue they are already a member of_.
