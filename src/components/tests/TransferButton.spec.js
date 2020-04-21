@@ -1,5 +1,5 @@
 import React from 'react'
-import ChatTransferButton from '../ChatTransferButton'
+import TransferButton from '../TransferButton'
 import Enzyme from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import { Actions } from '@twilio/flex-ui'
@@ -13,7 +13,7 @@ describe('Chat Transfer Button', () => {
   let subject;
 
   beforeEach(() => {
-    subject = Enzyme.mount(<ChatTransferButton />);
+    subject = Enzyme.mount(<TransferButton />);
   })
 
   it('calls show directory when clicked', () => {
