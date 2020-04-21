@@ -1,13 +1,18 @@
 [
-  {
-    "name": "ChatTransferPlugin",
-    "version": "0.0.0",
-    "class": "ChatTransferPlugin",
-    "requires": [
-      {
-        "@twilio/flex-ui": "^1"
-      }
-    ],
-    "src": "http://127.0.0.1:8085"
-  }
+	{
+		"name": "ChatTransferPlugin",
+		"version": "0.0.0",
+		"class": "ChatTransferPlugin",
+		"requires": [
+			{
+				"@twilio/flex-ui": "^1"
+			}
+		],
+		"src": "http://127.0.0.1:8085"
+	},
+	{
+		"name": "Admin Plugin",
+		"version": "1.0.1",
+		"src": "https://media.twiliocdn.com/flex/flex-admin-plugin-1.0.1.js"
+	}
 ]

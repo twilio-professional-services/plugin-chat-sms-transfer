@@ -1,31 +1,48 @@
 {
-  "name": "plugin-chat-transfer",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "prestart": "flex-check-start",
-    "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
-    "test": "jest",
-    "eject": "react-app-rewired eject"
-  },
-  "devDependencies": {
-    "@babel/preset-env": "^7.8.7",
-    "@babel/preset-react": "^7.8.3",
-    "@twilio/flex-ui": "1.17.2",
-    "babel-jest": "^25.1.0",
-    "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2",
-    "jest": "^25.1.0",
-    "jest-fetch-mock": "^3.0.2",
-    "react-app-rewire-flex-plugin": "^1",
-    "react-app-rewired": "^1.6.2"
-  },
-  "dependencies": {
-    "flex-plugin": "1.3.4",
-    "react": "16.5.2",
-    "react-dom": "16.5.2",
-    "react-scripts": "1.1.5"
-  },
-  "config-overrides-path": "node_modules/react-app-rewire-flex-plugin"
+	"name": "plugin-chat-transfer",
+	"version": "1.0.0",
+	"private": true,
+	"scripts": {
+		"bootstrap": "flex-plugin check-start",
+		"prebuild": "rimraf build && npm run bootstrap",
+		"build": "flex-plugin build",
+		"clear": "flex-plugin clear",
+		"predeploy": "npm run build",
+		"deploy": "flex-plugin deploy",
+		"eject": "flex-plugin eject",
+		"postinstall": "npm run bootstrap",
+		"list": "flex-plugin list",
+		"remove": "flex-plugin remove",
+		"prestart": "npm run bootstrap",
+		"start": "flex-plugin start",
+		"test": "flex-plugin test --env=jsdom"
+	},
+	"devDependencies": {
+		"@twilio/flex-ui": "^1",
+		"babel-polyfill": "^6.26.0",
+		"enzyme": "^3.10.0",
+		"enzyme-adapter-react-16": "^1.14.0",
+		"rimraf": "^3.0.0"
+	},
+	"dependencies": {
+		"craco-config-flex-plugin": "^3.8.0",
+		"flex-plugin": "^3.5.0",
+		"flex-plugin-scripts": "^3.8.0",
+		"react": "16.5.2",
+		"react-dom": "16.5.2",
+		"react-scripts": "3.4.1"
+	},
+	"config-overrides-path": "node_modules/react-app-rewire-flex-plugin",
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	}
 }
