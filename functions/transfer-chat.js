@@ -55,7 +55,7 @@ exports.handler = JWEValidator(async function (context, event, callback) {
 
 	// create New task
 	let newTask = await client.taskrouter.workspaces(context.TWILIO_WORKSPACE_SID).tasks.create({
-		workflowSid: context.TWILIO_WORKFLOW_SID,
+		workflowSid: context.TWILIO_CHAT_TRANSFER_WORKFLOW_SID,
 		taskChannel: originalTask.taskChannelUniqueName,
 		attributes: JSON.stringify(newAttributes),
 	});
