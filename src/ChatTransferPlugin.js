@@ -6,6 +6,7 @@ import TransferButton from './components/TransferButton';
 
 const PLUGIN_NAME = 'ChatTransferPlugin';
 const DEFAULT_TRANSFER_MODE = 'COLD';
+const SERVERLESS_FUNCTION_DOMAIN = '';
 
 export const setUpComponents = () => {
 	Flex.TaskCanvasHeader.Content.add(<TransferButton key="chat-transfer-button" />, {
@@ -38,7 +39,7 @@ export const transferOverride = (payload, original) => {
 			workerName: manager.user.identity,
 		};
 
-		fetch(`https://${manager.serviceConfiguration.runtime_domain}/transfer-chat`, {
+		fetch(`https://${SERVERLESS_FUNCTION_DOMAIN}/transfer-chat`, {
 			headers: {
 				'Content-Type': 'application/json',
 			},
