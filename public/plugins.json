@@ -1,14 +1,14 @@
 [
   {
     "name": "ChatTransferPlugin",
-    "version": "0.0.0",
+    "version": "1.0.0",
     "class": "ChatTransferPlugin",
     "requires": [
       {
         "@twilio/flex-ui": "^1"
       }
     ],
-    "src": "http://localhost:8080/plugin-chat-transfer.js"
+    "src": "http://localhost:3000/plugin-chat-sms-transfer.js"
   },
   {
     "name": "Admin Plugin",
