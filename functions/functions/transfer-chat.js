@@ -1,7 +1,7 @@
 const JWEValidator = require('twilio-flex-token-validator').functionValidator;
 
 exports.handler = JWEValidator(async function (context, event, callback) {
-	// setup twilio client
+	// set up twilio client
 	const client = context.getTwilioClient();
 
 	// setup a response object
@@ -17,15 +17,15 @@ exports.handler = JWEValidator(async function (context, event, callback) {
 	const workerName = event.workerName;
 	const mode = event.mode;
 
-	// retrieve original task's attributes
+	// retrieve attributes of the original task
 	let originalTask = await client.taskrouter
 		.workspaces(context.TWILIO_WORKSPACE_SID)
 		.tasks(originalTaskSid)
 		.fetch();
 	let newAttributes = JSON.parse(originalTask.attributes);
 
-	// setup new task's attributes such that its linked to the
-	// original task in Flex Insights
+	// set up attributes of the new task to link them to 
+	// the original task in Flex Insights
 	if (!newAttributes.hasOwnProperty('conversations')) {
 		newAttributes = Object.assign(newAttributes, {
 			conversations: {
@@ -35,18 +35,18 @@ exports.handler = JWEValidator(async function (context, event, callback) {
 	}
 
 	// update task attributes to ignore the agent who transferred the task
-	// its possible that the agent who transferred the task in the queue
+	// it's possible that the agent who transferred the task is in the queue
 	// the task is being transferred to - but we don't want them to
 	// receive a task they just transferred. It's also possible the agent
 	// is simply transferring to the same queue the task is already in
 	// once again, we don't want the transferring agent to receive the task
 	newAttributes.ignoreAgent = workerName;
 
-	// update task attributes to put the required targetSid on the task
-	// this could be either a workerSid or a queueSid
+	// update task attributes to include the required targetSid on the task
+	// this could either be a workerSid or a queueSid
 	newAttributes.targetSid = targetSid;
 
-	// add an attribute that will tell our Workflow if we're transfering to a worker or queue
+	// add an attribute that will tell our Workflow if we're transferring to a worker or a queue
 	if (targetSid.startsWith('WK')) {
 		newAttributes.transferTargetType = 'worker';
 	} else {
