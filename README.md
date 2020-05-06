@@ -22,17 +22,17 @@ Because Flex does not natively support chat and SMS transfers, this plugin works
 
 This plugin supports both warm and cold transfers to agents and queues. The phone icon serves as the **Warm Transfer** button while the right arrow serves as the **Cold Transfer** button. 
 
-It is up to you to implement the necessary TaskRouter routing rules to send the task to the specified queue or worker. To aid you in this, three new attributes within [`functions/transfer-chat.js` ](functions/functions/transfer-chat.js) will be added to your tasks: `targetSid`, `transferTargetType`, and `ignoreAgent`:
+It is up to you to implement the necessary TaskRouter routing rules to send the task to the specified queue or worker. To aid you in this, three new attributes within [`functions/transfer-chat.js`](functions/functions/transfer-chat.js) will be added to your tasks: `targetSid`, `transferTargetType`, and `ignoreAgent`:
 
 | Attribute | Expected Setting |
 |-----------|----------------|
 | `targetSid` | Worker or Queue Sid which will be used to determine if you are transferring to a worker or a queue. |
-| `transferTargetType` | Can be set to `worker` or `queue` and lets your workflow route the task to a specific agent or queue. If you are routing the task to a specific worker, we recommend you have a queue like the "Everyone" queue where all workers are members of the queue. Set the `targetSid` to the Sid of the worker you want to transfer the chat or SMS task to. | 
+| `transferTargetType` | Can be set to `worker` or `queue` and lets your workflow route the task to a specific agent or queue. If you are routing the task to a specific worker, we recommend you have a queue like the "Everyone" queue where all workers are members of the queue. Additionally, set the `targetSid` to the Sid of the worker you want to transfer the chat or SMS task to. | 
 | `ignoreAgent` | This will be populated by the name of the agent who initiated the chat/SMS transfer. This ensures that the last agent to transfer the task will not receive the transfer they initiated, *assuming they are transferring the Task to a queue they are already a member of.*  |
 
 ### Prerequisite Function
 
-There is a single function located in `functions` directory that you are expected to implement in the [Twilio Functions Runtime](https://www.twilio.com/docs/runtime), or to replicate in your own backend application.
+There is a single function located in the `functions` directory that you are expected to implement in the [Twilio Functions Runtime](https://www.twilio.com/docs/runtime), or to replicate in your own backend application.
 
 ##### Required Env Variables in your Function
 
@@ -47,7 +47,7 @@ Follow the instructions on the file and set your Flex project configuration valu
 
 #### Function Deployment via the Twilio CLI
 
-One way to deploy the plugin function using the Twilio Functions Runtime is to deploy using the Twilio CLI and the Serverless Plugin. To get started, see the [Twilio CLI Quickstart](https://www.twilio.com/docs/twilio-cli/quickstart#warning-for-nodejs-developers) and [Install the Twilio Serverless Toolkit](https://www.twilio.com/docs/labs/serverless-toolkit/getting-started).
+One way to deploy the plugin function to the Twilio Functions Runtime is to use the Twilio CLI and the Serverless Plugin. To get started, see the [Twilio CLI Quickstart](https://www.twilio.com/docs/twilio-cli/quickstart#warning-for-nodejs-developers) and [Install the Twilio Serverless Toolkit](https://www.twilio.com/docs/labs/serverless-toolkit/getting-started).
 
 To confirm that your environment variables have been set properly, run the following:
 
@@ -61,14 +61,14 @@ To deploy the serverless function to the Serverless API, run:
 twilio serverless:deploy
 ```
 
-You can review your deployed resources in the Twilio Console by navigating to **Functions > API** with your Flex project selected. To learn more about the Functions and Assets API, see [Functions & Assets (API Only): Beta limitations, known issues and limits](https://www.twilio.com/docs/runtime/functions-assets-api).
+You can review your deployed resources in the Twilio Console by selecting your Flex project from the dropdown list on the upper left corner of the screen and navigating to **Functions > API**. To learn more about the Functions and Assets API, see [Functions & Assets (API Only): Beta limitations, known issues and limits](https://www.twilio.com/docs/runtime/functions-assets-api).
 
 
 ##### Required NPM Package for your Function Environment
 
 This plugin uses a Twilio function to perform the "transfer" of the chat task. If you use the [Twilio Functions Runtime](https://www.twilio.com/docs/runtime), you'll need to validate that the incoming requests to your serverless function are coming from a Flex front-end.
 
-This plugin will send the Flex user's token along with the task information to transfer. upon validating the token, it will intiate the transfer. This plugin expects that you've [configured your Twilio Functions Runtime](https://www.twilio.com/console/runtime/functions/configure) dependencies and added the `twilio-flex-token-validator` package.
+This plugin will send the Flex user's token along with the task information to transfer. Upon validating the token, it will initiate the transfer. This plugin expects that you've [configured your Twilio Functions Runtime](https://www.twilio.com/console/runtime/functions/configure) dependencies and added the `twilio-flex-token-validator` package.
 
 ![Twilio Token Validator Configuration](https://indigo-bombay-5783.twil.io/assets/twilio-function-validator.jpg)
 
