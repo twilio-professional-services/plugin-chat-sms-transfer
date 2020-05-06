@@ -45,25 +45,6 @@ cd functions && mv .env.sample .env
 
 Follow the instructions on the file and set your Flex project configuration values as environment variables.
 
-#### Function Deployment via the Twilio CLI
-
-One way to deploy the plugin function to the Twilio Functions Runtime is to use the Twilio CLI and the Serverless Plugin. To get started, see the [Twilio CLI Quickstart](https://www.twilio.com/docs/twilio-cli/quickstart#warning-for-nodejs-developers) and [Install the Twilio Serverless Toolkit](https://www.twilio.com/docs/labs/serverless-toolkit/getting-started).
-
-To confirm that your environment variables have been set properly, run the following:
-
-```
-twilio serverless:list
-```
-
-To deploy the serverless function to the Serverless API, run:
-
-```
-twilio serverless:deploy
-```
-
-You can review your deployed resources in the Twilio Console by selecting your Flex project from the dropdown list on the upper left corner of the screen and navigating to **Functions > API**. To learn more about the Functions and Assets API, see [Functions & Assets (API Only): Beta limitations, known issues and limits](https://www.twilio.com/docs/runtime/functions-assets-api).
-
-
 ##### Required NPM Package for your Function Environment
 
 This plugin uses a Twilio function to perform the "transfer" of the chat task. If you use the [Twilio Functions Runtime](https://www.twilio.com/docs/runtime), you'll need to validate that the incoming requests to your serverless function are coming from a Flex front-end.
@@ -117,4 +98,24 @@ npm run build
 
 Afterwards, you'll find in your project a `build` folder that contains a file with the name of your plugin project. For example `plugin-<plugin-name>.js`. Take this file and upload it to the Assets part of your Twilio Runtime.
 
+#### Function and Assets Deployment via the Twilio CLI
+
+One way to deploy the plugin function and assets to the [Twilio Runtime] is to use the Twilio CLI and the Serverless Plugin. For installation instructions, see the [Twilio CLI Quickstart](https://www.twilio.com/docs/twilio-cli/quickstart#warning-for-nodejs-developers) and [Install the Twilio Serverless Toolkit](https://www.twilio.com/docs/labs/serverless-toolkit/getting-started).
+
+To confirm that your environment variables have been set properly, run the following:
+
+```
+twilio serverless:list
+```
+
+To deploy the serverless function to the Serverless API, run:
+
+```
+twilio serverless:deploy --assets-folder="path/to/build_directory"
+```
+
+You can review your deployed resources in the Twilio Console by selecting your Flex project from the dropdown list on the upper left corner of the screen and navigating to **Functions > API**. To learn more about the Functions and Assets API, see [Functions & Assets (API Only): Beta limitations, known issues and limits](https://www.twilio.com/docs/runtime/functions-assets-api).
+
 Note: Common packages like `React`, `ReactDOM`, `Redux` and `ReactRedux` are not bundled with the build because they are treated as external dependencies so the plugin will depend on Flex which would provide them globally.
+
+
