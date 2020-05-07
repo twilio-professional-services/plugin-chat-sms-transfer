@@ -100,7 +100,18 @@ Afterwards, you'll find in your project a `build` folder that contains a file wi
 
 #### Function and Assets Deployment via the Twilio CLI
 
-One way to deploy the plugin function and assets to the [Twilio Runtime] is to use the Twilio CLI and the Serverless Plugin. For installation instructions, see the [Twilio CLI Quickstart](https://www.twilio.com/docs/twilio-cli/quickstart#warning-for-nodejs-developers) and [Install the Twilio Serverless Toolkit](https://www.twilio.com/docs/labs/serverless-toolkit/getting-started).
+One way to deploy the plugin function and assets to the [Twilio Runtime](https://www.twilio.com/docs/runtime) is to use the Twilio CLI and the Serverless Plugin. 
+
+You can install the necessary dependencies with the following commands:
+
+```
+# Install the Twilio CLI
+npm install twilio-cli -g
+
+# Install the Serverless plugin
+twilio plugins:install @twilio-labs/plugin-serverless
+```
+For more details, see the [Twilio CLI Quickstart](https://www.twilio.com/docs/twilio-cli/quickstart#warning-for-nodejs-developers) and [Install the Twilio Serverless Toolkit](https://www.twilio.com/docs/labs/serverless-toolkit/getting-started).
 
 To confirm that your environment variables have been set properly, run the following:
 
