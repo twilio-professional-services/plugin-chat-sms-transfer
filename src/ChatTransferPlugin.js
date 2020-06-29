@@ -29,30 +29,23 @@ export const transferOverride = (payload, original) => {
 
 	const mode = payload.options.mode || DEFAULT_TRANSFER_MODE;
 
-	return new Promise((resolve, reject) => {
-		const manager = Flex.Manager.getInstance();
-		const body = {
-			Token: manager.user.token,
-			mode: mode,
-			taskSid: payload.task.taskSid,
-			targetSid: payload.targetSid,
-			workerName: manager.user.identity,
-		};
 
-		fetch(`https://${SERVERLESS_FUNCTION_DOMAIN}/transfer-chat`, {
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			method: 'POST',
-			body: JSON.stringify(body),
-		})
-			.then((response) => {
-				resolve();
-			})
-			.catch((error) => {
-				reject();
-			});
-	});
+  const manager = Flex.Manager.getInstance();
+  const body = {
+    Token: manager.user.token,
+    mode: mode,
+    taskSid: payload.task.taskSid,
+    targetSid: payload.targetSid,
+    workerName: manager.user.identity,
+  };
+
+  return fetch(`https://${SERVERLESS_FUNCTION_DOMAIN}/transfer-chat`, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    method: 'POST',
+    body: JSON.stringify(body),
+  })
 };
 
 export default class ChatTransferPlugin extends FlexPlugin {
