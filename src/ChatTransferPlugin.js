@@ -1,52 +1,9 @@
 import { FlexPlugin } from 'flex-plugin';
-import fetch from 'node-fetch';
-import React from 'react';
-import * as Flex from '@twilio/flex-ui';
-import TransferButton from './components/TransferButton';
+import { setUpActions } from './helpers/actions';
+import { setUpComponents } from './helpers/components';
+import { setUpNotifications } from './helpers/notifications';
 
 const PLUGIN_NAME = 'ChatTransferPlugin';
-const DEFAULT_TRANSFER_MODE = 'COLD';
-const SERVERLESS_FUNCTION_DOMAIN = '';
-
-export const setUpComponents = () => {
-	Flex.TaskCanvasHeader.Content.add(<TransferButton key="chat-transfer-button" />, {
-		sortOrder: 1,
-		if: (props) =>
-			props.channelDefinition.capabilities.has('Chat') && props.task.taskStatus === 'assigned',
-	});
-};
-
-export const setUpActions = () => {
-	Flex.Actions.replaceAction('TransferTask', (payload, original) =>
-		transferOverride(payload, original)
-	);
-};
-
-export const transferOverride = (payload, original) => {
-	if (!Flex.TaskHelper.isChatBasedTask(payload.task)) {
-		return original(payload);
-	}
-
-	const mode = payload.options.mode || DEFAULT_TRANSFER_MODE;
-
-
-  const manager = Flex.Manager.getInstance();
-  const body = {
-    Token: manager.user.token,
-    mode: mode,
-    taskSid: payload.task.taskSid,
-    targetSid: payload.targetSid,
-    workerName: manager.user.identity,
-  };
-
-  return fetch(`https://${SERVERLESS_FUNCTION_DOMAIN}/transfer-chat`, {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    method: 'POST',
-    body: JSON.stringify(body),
-  })
-};
 
 export default class ChatTransferPlugin extends FlexPlugin {
 	constructor() {
@@ -62,6 +19,7 @@ export default class ChatTransferPlugin extends FlexPlugin {
 	 */
 	init(flex, manager) {
 		setUpComponents();
+		setUpNotifications();
 		setUpActions();
 	}
 }
