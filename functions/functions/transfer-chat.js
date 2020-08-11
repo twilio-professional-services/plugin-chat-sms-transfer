@@ -9,7 +9,10 @@ exports.handler = JWEValidator(async function (context, event, callback) {
 	response.appendHeader('Access-Control-Allow-Origin', '*');
 	response.appendHeader('Access-Control-Allow-Methods', 'OPTIONS POST');
 	response.appendHeader('Content-Type', 'application/json');
-	response.appendHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With, User-Agent');
+	response.appendHeader(
+		'Access-Control-Allow-Headers',
+		'Content-Type, Authorization, Content-Length, X-Requested-With, User-Agent'
+	);
 	response.appendHeader('Vary', 'Origin');
 
 	// parse data form the incoming http request
@@ -25,7 +28,15 @@ exports.handler = JWEValidator(async function (context, event, callback) {
 		.fetch();
 	let newAttributes = JSON.parse(originalTask.attributes);
 
-	// set up attributes of the new task to link them to 
+	// during the transfer request the original task gets an attribute wasTransferred set to true.
+	// this allows the transfer plugin to identify the task when the first agent leaves and not have the
+	// flex ui automatically close the chat channel. leaving the transfer recipient agent to continue talking
+	// with the customer.
+	//
+	// we remove it from the `newAttributes` so the next task representing the transfer does not contain it.
+	delete newAttributes.wasTransferred;
+
+	// set up attributes of the new task to link them to
 	// the original task in Flex Insights
 	if (!newAttributes.hasOwnProperty('conversations')) {
 		newAttributes = Object.assign(newAttributes, {
@@ -62,20 +73,6 @@ exports.handler = JWEValidator(async function (context, event, callback) {
 	});
 
 	if (mode == 'COLD') {
-		// Set the channelSid and ProxySessionSID to a dummy value. This keeps the session alive
-		let updatedAttributes = {
-			...JSON.parse(originalTask.attributes),
-			channelSid: 'CH00000000000000000000000000000000',
-			proxySessionSID: 'KC00000000000000000000000000000000',
-		};
-
-		await client.taskrouter
-			.workspaces(context.TWILIO_WORKSPACE_SID)
-			.tasks(originalTaskSid)
-			.update({
-				attributes: JSON.stringify(updatedAttributes),
-			});
-
 		// Close the original Task
 		await client.taskrouter
 			.workspaces(context.TWILIO_WORKSPACE_SID)
