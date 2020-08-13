@@ -157,7 +157,7 @@ Once you have deployed the function, it is time to deploy the plugin to your Fle
 
 You need to modify the source file to mention the serverless domain of the function that you deployed previously.
 
-- Open src/ChatTransferPlugin.js in a text editor of your choice. 
+- Open src/helpers/actions.js in a text editor of your choice. 
 - Paste the Function deployment domain in the variable SERVERLESS_FUNCTION_DOMAIN.
    ```
    const SERVERLESS_FUNCTION_DOMAIN = 'plugin-chat-sms-transfer-7325-dev.twil.io';
