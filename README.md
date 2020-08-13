@@ -186,3 +186,15 @@ Uploading your Flex plugin to Twilio Assets
 ```
 
 You are all set to test Chat and SMS transfers on your Flex instance!
+
+---
+
+## Changelog
+
+### 1.0.1
+**August 13, 2020**
+* Updated README - added changelog
+
+### 1.0
+**August 11, 2020**
+* Fixes [GitHub Issue #21](https://github.com/twilio-professional-services/plugin-chat-sms-transfer/issues/21)
