@@ -40,15 +40,6 @@ all the config values we need to run this Flex plugin:
 | Workspace SID | Your Flex Task Assignment workspace SID - find this [in the Console TaskRouter Workspaces page](https://www.twilio.com/console/taskrouter/workspaces). |
 | Queue SID(s) | The unique IDs of the Flex task queues you wish to use for chat or SMS transfers - find this in the Console TaskRouter TaskQueues page. |
 
-
-### npm Package Requirement
-
-This plugin uses a Twilio function to perform the "transfer" of the chat task. If you use the [Twilio Functions Runtime](https://www.twilio.com/docs/runtime), you'll need to validate that the incoming requests to your serverless function are coming from a Flex front-end.
-
-This plugin will send the Flex user's token along with the task information to transfer. Upon validating the token, it will initiate the transfer. This plugin expects that you've [configured your Twilio Functions Runtime](https://www.twilio.com/console/runtime/functions/configure) dependencies and added the `twilio-flex-token-validator` package.
-
-![Twilio Token Validator Configuration](https://indigo-bombay-5783.twil.io/assets/twilio-function-validator.jpg)
-
 ## Plugin Details
 
 The Chat and SMS Transfers for Flex plugin adds a **Transfer** button near the **End Chat** button that comes out of the box with Flex. Clicking this button opens up the default [WorkerDirectory Flex component](https://www.twilio.com/docs/flex/ui/components#workerdirectory) with Agents and Queues tabs. Upon selecting an agent or a queue, this plugin will initiate a transfer of the chat task to the specified worker (agent) or queue.
