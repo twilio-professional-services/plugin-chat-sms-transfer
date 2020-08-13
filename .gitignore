@@ -63,3 +63,4 @@ typings/
 # Flex related ignore
 appConfig.js
 build/
+.twilio-functions
