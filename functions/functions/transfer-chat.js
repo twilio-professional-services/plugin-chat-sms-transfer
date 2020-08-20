@@ -19,7 +19,6 @@ exports.handler = JWEValidator(async function (context, event, callback) {
 	const originalTaskSid = event.taskSid;
 	const targetSid = event.targetSid;
 	const workerName = event.workerName;
-	const mode = event.mode;
 
 	// retrieve attributes of the original task
 	let originalTask = await client.taskrouter
@@ -72,13 +71,25 @@ exports.handler = JWEValidator(async function (context, event, callback) {
 		attributes: JSON.stringify(newAttributes),
 	});
 
-	if (mode == 'COLD') {
-		// Close the original Task
-		await client.taskrouter
-			.workspaces(context.TWILIO_WORKSPACE_SID)
-			.tasks(originalTaskSid)
-			.update({ assignmentStatus: 'completed', reason: 'task transferred' });
-	}
+	// Remove the original transferred task's reference to the chat channelSid
+	// this prevents Twilio's Janitor service from cleaning up the channel when
+	// the original task gets completed.
+	let originalTaskAttributes = JSON.parse(originalTask.attributes);
+	delete originalTaskAttributes.channelSid;
+
+	// update task and remove channelSid
+	await client.taskrouter
+		.workspaces(context.TWILIO_WORKSPACE_SID)
+		.tasks(originalTaskSid)
+		.update({
+			attributes: JSON.stringify(originalTaskAttributes),
+		});
+
+	// Close the original Task
+	await client.taskrouter
+		.workspaces(context.TWILIO_WORKSPACE_SID)
+		.tasks(originalTaskSid)
+		.update({ assignmentStatus: 'completed', reason: 'task transferred' });
 
 	response.setBody({
 		taskSid: newTask.sid,

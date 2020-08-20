@@ -17,15 +17,17 @@ The Chat and SMS Transfers for Flex plugin helps contact center administrators s
 ### Requirements
 
 To deploy this plugin, you will need:
+
 - An active Twilio account. [Sign up](https://www.twilio.com/try-twilio) if you don't already have one
-- A Twilio Flex instance where you have admin permissions. See our [getting started guide](https://www.twilio.com/docs/flex/quickstart/flex-basics#sign-up-for-or-sign-in-to-twilio-and-create-a-new-flex-project) to create one 
+- A Twilio Flex instance where you have admin permissions. See our [getting started guide](https://www.twilio.com/docs/flex/quickstart/flex-basics#sign-up-for-or-sign-in-to-twilio-and-create-a-new-flex-project) to create one
 - [Twilio CLI](https://www.twilio.com/docs/twilio-cli/quickstart#install-twilio-cli) along with the [Flex CLI Plugin](https://www.twilio.com/docs/twilio-cli/plugins#available-plugins) and the [Serverless Plugin](https://www.twilio.com/docs/twilio-cli/plugins#available-plugins). Run the following commands to install them:
-   ```
-   # Install the Twilio CLI
-   npm install twilio-cli -g
-   # Install the Serverless and Flex as Plugins
-   twilio plugins:install @twilio-labs/plugin-serverless
-   twilio plugins:install @twilio-labs/plugin-flex
+  ```
+  # Install the Twilio CLI
+  npm install twilio-cli -g
+  # Install the Serverless and Flex as Plugins
+  twilio plugins:install @twilio-labs/plugin-serverless
+  twilio plugins:install @twilio-labs/plugin-flex
+  ```
 - A GitHub account
 
 ### Twilio Account Settings
@@ -33,12 +35,12 @@ To deploy this plugin, you will need:
 Before we begin, we need to collect
 all the config values we need to run this Flex plugin:
 
-| Config&nbsp;Value | Description                                                                                                                                                  |
-| :---------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Account&nbsp;Sid  | Your primary Twilio account identifier - find this [in the Console](https://www.twilio.com/console).                                                         |
-| Auth Token | Used to create an API key for future CLI access to your Twilio Account - find this [in the Console](https://www.twilio.com/console). |
-| Workspace SID | Your Flex Task Assignment workspace SID - find this [in the Console TaskRouter Workspaces page](https://www.twilio.com/console/taskrouter/workspaces). |
-| Queue SID(s) | The unique IDs of the Flex task queues you wish to use for chat or SMS transfers - find this in the Console TaskRouter TaskQueues page. |
+| Config&nbsp;Value | Description                                                                                                                                            |
+| :---------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Account&nbsp;Sid  | Your primary Twilio account identifier - find this [in the Console](https://www.twilio.com/console).                                                   |
+| Auth Token        | Used to create an API key for future CLI access to your Twilio Account - find this [in the Console](https://www.twilio.com/console).                   |
+| Workspace SID     | Your Flex Task Assignment workspace SID - find this [in the Console TaskRouter Workspaces page](https://www.twilio.com/console/taskrouter/workspaces). |
+| Queue SID(s)      | The unique IDs of the Flex task queues you wish to use for chat or SMS transfers - find this in the Console TaskRouter TaskQueues page.                |
 
 ## Plugin Details
 
@@ -48,15 +50,13 @@ The Chat and SMS Transfers for Flex plugin adds a **Transfer** button near the *
 
 Because Flex does not natively support chat and SMS transfers, this plugin works by creating a new task and routing it through your workflow as normal. Subsequent "transfer" tasks are linked to the original task to be compatible with Flex Insights reporting.
 
-This plugin supports both warm and cold transfers to agents and queues. The phone icon serves as the **Warm Transfer** button while the right arrow serves as the **Cold Transfer** button. 
-
 It is up to you to implement the necessary TaskRouter routing rules to send the task to the specified queue or worker. To aid you in this, three new attributes within [`functions/transfer-chat.js`](functions/functions/transfer-chat.js) will be added to your tasks: `targetSid`, `transferTargetType`, and `ignoreAgent`:
 
-| Attribute | Expected Setting |
-|-----------|----------------|
-| `targetSid` | Worker or Queue Sid which will be used to determine if you are transferring to a worker or a queue. |
-| `transferTargetType` | Can be set to `worker` or `queue` and lets your workflow route the task to a specific agent or queue. If you are routing the task to a specific worker, we recommend you have a queue like the "Everyone" queue where all workers are members of the queue. Additionally, set the `targetSid` to the Sid of the worker you want to transfer the chat or SMS task to. | 
-| `ignoreAgent` | This will be populated by the name of the agent who initiated the chat/SMS transfer. This ensures that the last agent to transfer the task will not receive the transfer they initiated, *assuming they are transferring the Task to a queue they are already a member of.*  |
+| Attribute            | Expected Setting                                                                                                                                                                                                                                                                                                                                                     |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `targetSid`          | Worker or Queue Sid which will be used to determine if you are transferring to a worker or a queue.                                                                                                                                                                                                                                                                  |
+| `transferTargetType` | Can be set to `worker` or `queue` and lets your workflow route the task to a specific agent or queue. If you are routing the task to a specific worker, we recommend you have a queue like the "Everyone" queue where all workers are members of the queue. Additionally, set the `targetSid` to the Sid of the worker you want to transfer the chat or SMS task to. |
+| `ignoreAgent`        | This will be populated by the name of the agent who initiated the chat/SMS transfer. This ensures that the last agent to transfer the task will not receive the transfer they initiated, _assuming they are transferring the Task to a queue they are already a member of._                                                                                          |
 
 ---
 
@@ -130,6 +130,7 @@ TWILIO_CHAT_TRANSFER_WORKFLOW_SID = WWdddd
 ```
 
 Step 3: Deploy the Twilio function to your account using the Twilio CLI:
+
 ```
 functions $ twilio serverless:deploy
 
@@ -149,7 +150,7 @@ Step 4: Copy and save the domain returned when you deploy a function. You will n
 
 If you forget to copy the domain, you can also find it by navigating to [Functions > API](https://www.twilio.com/console/functions/api) in the Twilio Console.
 
-> Debugging Tip: Pass the `-l` or logging flag to review deployment logs. 
+> Debugging Tip: Pass the `-l` or logging flag to review deployment logs.
 
 ### Flex Plugin Deployment
 
@@ -157,13 +158,14 @@ Once you have deployed the function, it is time to deploy the plugin to your Fle
 
 You need to modify the source file to mention the serverless domain of the function that you deployed previously.
 
-- Open src/helpers/actions.js in a text editor of your choice. 
+- Open src/helpers/actions.js in a text editor of your choice.
 - Paste the Function deployment domain in the variable SERVERLESS_FUNCTION_DOMAIN.
-   ```
-   const SERVERLESS_FUNCTION_DOMAIN = 'plugin-chat-sms-transfer-7325-dev.twil.io';
-   ```
-   
+  ```
+  const SERVERLESS_FUNCTION_DOMAIN = 'plugin-chat-sms-transfer-7325-dev.twil.io';
+  ```
+
 When you are ready to deploy the plugin, run the following in a command shell:
+
 ```
 twilio flex:plugins:deploy
 ```
@@ -192,9 +194,13 @@ You are all set to test Chat and SMS transfers on your Flex instance!
 ## Changelog
 
 ### 1.0.1
+
 **August 13, 2020**
-* Updated README - added changelog
+
+- Updated README - added changelog
 
 ### 1.0
+
 **August 11, 2020**
-* Fixes [GitHub Issue #21](https://github.com/twilio-professional-services/plugin-chat-sms-transfer/issues/21)
+
+- Fixes [GitHub Issue #21](https://github.com/twilio-professional-services/plugin-chat-sms-transfer/issues/21)

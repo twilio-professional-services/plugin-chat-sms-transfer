@@ -1,7 +1,6 @@
 import { Actions, ChatOrchestrator, TaskHelper, Manager, Notifications } from '@twilio/flex-ui';
 import fetch from 'node-fetch';
 
-const DEFAULT_TRANSFER_MODE = 'COLD';
 // Once you publish the chat transfer function, place the returned domain in your version of the plugin.
 const SERVERLESS_FUNCTION_DOMAIN = '';
 
@@ -60,22 +59,18 @@ export const transferOverride = async (payload, original) => {
 	attributes.wasTransferred = true;
 	await payload.task.setAttributes(attributes);
 
-	// We can support both warm and cold transfer options
-	const mode = payload.options.mode || DEFAULT_TRANSFER_MODE;
-
 	// instantiate the manager to get useful info like user identity and token
 	// build the request to initiate the transfer
 	const manager = Manager.getInstance();
 	const body = {
 		Token: manager.user.token,
-		mode: mode,
 		taskSid: payload.task.taskSid,
 		targetSid: payload.targetSid,
 		workerName: manager.user.identity,
 	};
 
 	// initiate the transfer
-	return fetch(`http://${SERVERLESS_FUNCTION_DOMAIN}/transfer-chat`, {
+	return fetch(`${SERVERLESS_FUNCTION_DOMAIN}/transfer-chat`, {
 		headers: {
 			'Content-Type': 'application/json',
 		},
