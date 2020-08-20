@@ -193,6 +193,14 @@ You are all set to test Chat and SMS transfers on your Flex instance!
 
 ## Changelog
 
+### 1.1
+
+** August 20, 2020 **
+
+- Twilio Channel Janitor will no longer clean up chat channels as soon as they are transferred. Now you can operate this plugin even if you have the Janitor service enabled on your Flex Flow.
+- Unfortunately, we can't make warm transfers work with this new update, so all transfers are now "cold" (meaning the initiating agent will have their task immediately completed).
+- We had previously been hardcoding `http://` protocol in the `fetch` call to the associated Twilio function. This has been removed and your `SERVERLESS_FUNCTION_DOMAIN` should now specify your desired protocol. This makes transitioning from local development to production a little easier.
+
 ### 1.0.1
 
 **August 13, 2020**
