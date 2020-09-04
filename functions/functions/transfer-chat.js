@@ -27,14 +27,6 @@ exports.handler = JWEValidator(async function (context, event, callback) {
 		.fetch();
 	let newAttributes = JSON.parse(originalTask.attributes);
 
-	// during the transfer request the original task gets an attribute wasTransferred set to true.
-	// this allows the transfer plugin to identify the task when the first agent leaves and not have the
-	// flex ui automatically close the chat channel. leaving the transfer recipient agent to continue talking
-	// with the customer.
-	//
-	// we remove it from the `newAttributes` so the next task representing the transfer does not contain it.
-	delete newAttributes.wasTransferred;
-
 	// set up attributes of the new task to link them to
 	// the original task in Flex Insights
 	if (!newAttributes.hasOwnProperty('conversations')) {

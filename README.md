@@ -193,6 +193,12 @@ You are all set to test Chat and SMS transfers on your Flex instance!
 
 ## Changelog
 
+### 1.2
+
+** September 4, 2020 **
+
+- We now fully bypass the Flex ChatOrchestrator object and manually remove agent's from chat sessions. This ensures agents don't hit the 250 Chat Channel limit while transfering chat sessions.
+
 ### 1.1
 
 ** August 20, 2020 **

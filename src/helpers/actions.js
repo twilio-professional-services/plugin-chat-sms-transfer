@@ -1,4 +1,4 @@
-import { Actions, ChatOrchestrator, TaskHelper, Manager, Notifications } from '@twilio/flex-ui';
+import { Actions, TaskHelper, Manager, Notifications, StateHelper } from '@twilio/flex-ui';
 import fetch from 'node-fetch';
 
 // Once you publish the chat transfer function, place the returned domain in your version of the plugin.
@@ -14,29 +14,6 @@ const SERVERLESS_FUNCTION_DOMAIN = '';
  */
 export const setUpActions = () => {
 	Actions.replaceAction('TransferTask', (payload, original) => transferOverride(payload, original));
-	// Modify default Flex Orchestrations for Chat Channels
-	ChatOrchestrator.setOrchestrations('wrapup', orchestrationCallback);
-	ChatOrchestrator.setOrchestrations('completed', orchestrationCallback);
-};
-
-/**
- * Every task that enters wrapup, or completed states runs through this callback. (see setUpActions)
- *
- * By default, when you push a chat task into wrapping, flex deactivates the chat channel and removes the
- * agent from the chat. In the case of a transfer and completion of the original task, we don't want to do this.
- *
- * The callback inspects the task for a specific attribute `wasTransferred` - this attribute
- * is added during the request to initiate the transfer. If we see it, we modify which orchestrations run.
- *
- * In this case, if we see the task is a transferred task, we only want to run the LeaveChatChannel orchestration.
- * Returning 'LeaveChatChannel' only - allows the agent to leave the conversation without closing the chat session
- * Returning 'DeactivateChatChannel' and 'LeaveChatChannel' closes the channel when the agent leaves.
- */
-export const orchestrationCallback = (task) => {
-	if (task.attributes.wasTransferred) {
-		return ['LeaveChatChannel'];
-	}
-	return ['DeactivateChatChannel', 'LeaveChatChannel'];
 };
 
 /**
@@ -52,12 +29,14 @@ export const transferOverride = async (payload, original) => {
 		return original(payload);
 	}
 
-	// set a flag on the task attributes to let us know its a transfer task
-	// this is what tells the ChatOrchestrator to do when this task is put into
-	// wrapping or completed - see orchestrationCallback
-	const { attributes } = payload.task;
-	attributes.wasTransferred = true;
-	await payload.task.setAttributes(attributes);
+	// The Twilio Chat SDK only allows an agent to join 250 chat channels. The transfer-chat serverless function
+	// will bypass normal Flex controls for automatically removing agents from Twilio Chat channels in order
+	// to ensure the transfer "works". By forcefully removing the agent here, we ensure the agent never hits the
+	// 250 channel limit.
+	const channel = StateHelper.getChatChannelStateForTask(payload.task);
+	if (channel) {
+		channel.source.leave();
+	}
 
 	// instantiate the manager to get useful info like user identity and token
 	// build the request to initiate the transfer
