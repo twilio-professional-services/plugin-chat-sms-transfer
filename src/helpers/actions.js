@@ -59,5 +59,11 @@ export const transferOverride = async (payload, original) => {
 		// see src/helpers/notifications.js for how this custom notification is registered.
 		// if for some reason the request to transfer fails, show it to the agent
 		Notifications.showNotification('chatTransferFetchError', { message: e.message });
+
+		// If we encounter an error with the transfer-chat function we do not want to leave
+		// the customer with no one in the chat channel.
+		if (channel) {
+			channel.source.join();
+		}
 	});
 };
