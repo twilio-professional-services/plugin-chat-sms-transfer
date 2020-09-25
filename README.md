@@ -193,15 +193,21 @@ You are all set to test Chat and SMS transfers on your Flex instance!
 
 ## Changelog
 
+### 1.3
+
+**September 25, 2020**
+
+- Added error handling that rejoins the original agent to the chat session should an error occur during the transfer request.
+
 ### 1.2
 
-** September 4, 2020 **
+**September 4, 2020**
 
 - We now fully bypass the Flex ChatOrchestrator object and manually remove agent's from chat sessions. This ensures agents don't hit the 250 Chat Channel limit while transfering chat sessions.
 
 ### 1.1
 
-** August 20, 2020 **
+**August 20, 2020**
 
 - Twilio Channel Janitor will no longer clean up chat channels as soon as they are transferred. Now you can operate this plugin even if you have the Janitor service enabled on your Flex Flow.
 - Unfortunately, we can't make warm transfers work with this new update, so all transfers are now "cold" (meaning the initiating agent will have their task immediately completed).
