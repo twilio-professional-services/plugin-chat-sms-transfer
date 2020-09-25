@@ -2,7 +2,7 @@ import React from 'react';
 import { Actions, withTheme } from '@twilio/flex-ui';
 import { StyledButton } from './styles';
 
-class TransferButton extends React.PureComponent {
+export class TransferButton extends React.PureComponent {
 	render() {
 		return (
 			<StyledButton

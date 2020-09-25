@@ -1,19 +1,36 @@
 import React from 'react';
-import TransferButton from '..';
-import Enzyme from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+import { shallow } from 'enzyme';
+
 import { Actions } from '@twilio/flex-ui';
+import { TransferButton } from '..';
 
-Enzyme.configure({ adapter: new Adapter() });
-
-jest.mock('@twilio/flex-ui');
-jest.mock('flex-plugin');
+jest.mock('@twilio/flex-ui', () => {
+	return {
+		Actions: {
+			invokeAction: jest.fn(),
+		},
+		QueuesStats: {
+			setFilter: jest.fn(),
+		},
+		SidePanel: jest.fn(),
+		withTheme: jest.fn(),
+	};
+});
 
 describe('Chat Transfer Button', () => {
 	let subject;
+	let props;
 
 	beforeEach(() => {
-		subject = Enzyme.mount(<TransferButton />);
+		props = {
+			theme: {
+				colors: {
+					base11: '#000',
+					base2: '#ccc',
+				},
+			},
+		};
+		subject = shallow(<TransferButton {...props} />);
 	});
 
 	it('calls show directory when clicked', () => {
