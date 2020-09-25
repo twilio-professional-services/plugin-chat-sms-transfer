@@ -20,7 +20,9 @@
 	"devDependencies": {
 		"@twilio/flex-ui": "^1",
 		"babel-polyfill": "^6.26.0",
-		"rimraf": "^3.0.0"
+		"rimraf": "^3.0.0",
+		"enzyme": "^3.10.0",
+		"enzyme-adapter-react-16": "^1.14.0"
 	},
 	"dependencies": {
 		"craco-config-flex-plugin": "^3.8.0",

@@ -30,6 +30,10 @@ To deploy this plugin, you will need:
   ```
 - A GitHub account
 
+### Contributing
+
+All contributions and improvements to this plugin are welcome! To run the tests of the plugin: `npm run test`.
+
 ### Twilio Account Settings
 
 Before we begin, we need to collect
@@ -192,6 +196,12 @@ You are all set to test Chat and SMS transfers on your Flex instance!
 ---
 
 ## Changelog
+
+### 1.3.1
+
+**September 25, 2020**
+
+- Added full test suite and github actions. Updated readme with instructions on how to run tests.
 
 ### 1.3
 
