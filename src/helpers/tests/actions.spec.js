@@ -52,20 +52,87 @@ describe('actions', () => {
 	describe('transferOverride', () => {
 		let payload;
 		let original;
+		let body;
+		let joinFn;
+		let leaveFn;
 
 		beforeEach(() => {
+			body = {
+				Token: 'token',
+				taskSid: 'taskSid',
+				targetSid: 'targetSid',
+				workerName: 'identity',
+			};
+
 			payload = {
-				task: {},
+				task: {
+					taskSid: 'taskSid',
+				},
+				targetSid: 'targetSid',
 			};
 
 			original = jest.fn();
-		});
-		it('calls original for non chat tasks', () => {
-			jest.spyOn(TaskHelper, 'isChatBasedTask').mockImplementation(() => {
-				return false;
+			joinFn = jest.fn();
+			leaveFn = jest.fn();
+
+			StateHelper.getChatChannelStateForTask = jest.fn(() => {
+				return {
+					source: {
+						join: joinFn,
+						leave: leaveFn,
+					},
+				};
 			});
-			transferOverride(payload, original);
-			expect(original).toBeCalledWith(payload);
+		});
+
+		it('calls original for non chat tasks', async () => {
+			// force task helper to return false
+			TaskHelper.isChatBasedTask = jest.fn(() => false);
+
+			await transferOverride(payload, original);
+			expect(original).toHaveBeenCalled();
+
+			TaskHelper.isChatBasedTask.mockClear();
+		});
+
+		it('makes a request using fetch for chat tasks', async () => {
+			// force task helper to return true
+			TaskHelper.isChatBasedTask = jest.fn(() => true);
+
+			// mock fetch to return a valid value
+			fetch.mockImplementation(() => Promise.resolve(new Response()));
+
+			await transferOverride(payload, original);
+			expect(leaveFn).toHaveBeenCalled();
+			expect(joinFn).not.toHaveBeenCalled();
+			expect(original).not.toHaveBeenCalled();
+			expect(fetch).toHaveBeenCalledWith('/transfer-chat', {
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				method: 'POST',
+				body: JSON.stringify(body),
+			});
+		});
+
+		it('calls showNotification if there is a fetch error', async () => {
+			// force task helper to return true
+			TaskHelper.isChatBasedTask = jest.fn(() => true);
+
+			// mock fetch to return a valid value
+			fetch.mockImplementation(() =>
+				Promise.reject({
+					message: 'error',
+				})
+			);
+
+			await transferOverride(payload, original);
+			expect(leaveFn).toHaveBeenCalled();
+			expect(joinFn).toHaveBeenCalled();
+			expect(original).not.toHaveBeenCalled();
+			expect(Notifications.showNotification).toBeCalledWith('chatTransferFetchError', {
+				message: 'error',
+			});
 		});
 	});
 });
