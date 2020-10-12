@@ -1,48 +1,33 @@
 {
-	"name": "plugin-chat-sms-transfer",
-	"version": "1.0.0",
-	"private": true,
-	"scripts": {
-		"bootstrap": "flex-plugin check-start",
-		"prebuild": "rimraf build && npm run bootstrap",
-		"build": "flex-plugin build",
-		"clear": "flex-plugin clear",
-		"predeploy": "npm run build",
-		"deploy": "flex-plugin deploy",
-		"eject": "flex-plugin eject",
-		"postinstall": "npm run bootstrap",
-		"list": "flex-plugin list",
-		"remove": "flex-plugin remove",
-		"prestart": "npm run bootstrap",
-		"start": "flex-plugin start",
-		"test": "flex-plugin test --env=jsdom"
-	},
-	"devDependencies": {
-		"@twilio/flex-ui": "^1",
-		"babel-polyfill": "^6.26.0",
-		"rimraf": "^3.0.0",
-		"enzyme": "^3.10.0",
-		"enzyme-adapter-react-16": "^1.14.0"
-	},
-	"dependencies": {
-		"craco-config-flex-plugin": "^3.8.0",
-		"flex-plugin": "^3.5.0",
-		"flex-plugin-scripts": "^3.8.0",
-		"react": "16.5.2",
-		"react-dom": "16.5.2",
-		"react-scripts": "3.4.1"
-	},
-	"config-overrides-path": "node_modules/react-app-rewire-flex-plugin",
-	"browserslist": {
-		"production": [
-			">0.2%",
-			"not dead",
-			"not op_mini all"
-		],
-		"development": [
-			"last 1 chrome version",
-			"last 1 firefox version",
-			"last 1 safari version"
-		]
-	}
+  "name": "plugin-chat-sms-transfer",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "flex-plugin pre-script-check"
+  },
+  "devDependencies": {
+    "@twilio/flex-ui": "^1",
+    "babel-polyfill": "^6.26.0",
+    "enzyme": "^3.10.0",
+    "enzyme-adapter-react-16": "^1.14.0",
+    "flex-plugin-scripts": "4.0.12-beta.0"
+  },
+  "dependencies": {
+    "flex-plugin": "4.0.2-beta.0",
+    "react": "16.5.2",
+    "react-dom": "16.5.2"
+  },
+  "config-overrides-path": "node_modules/react-app-rewire-flex-plugin",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
