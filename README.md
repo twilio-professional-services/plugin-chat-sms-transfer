@@ -234,3 +234,7 @@ You are all set to test Chat and SMS transfers on your Flex instance!
 **August 11, 2020**
 
 - Fixes [GitHub Issue #21](https://github.com/twilio-professional-services/plugin-chat-sms-transfer/issues/21)
+
+
+## Disclaimer
+This software is to be considered "sample code", a Type B Deliverable, and is delivered "as-is" to the user. Twilio bears no responsibility to support the use or implementation of this software.
