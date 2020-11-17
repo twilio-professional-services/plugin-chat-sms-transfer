@@ -172,7 +172,7 @@ You need to modify the source file to mention the serverless domain of the funct
 When you are ready to deploy the plugin, run the following in a command shell:
 
 ```
-twilio flex:plugins:deploy --version="2.0.0" --changelog "Update the plugin to use Builder v4" --description "Chat and SMS Cold Transfers in Flex"
+twilio flex:plugins:deploy --major --changelog "Update the plugin to use Builder v4" --description "Chat and SMS Cold Transfers in Flex"
 ```
 
 
