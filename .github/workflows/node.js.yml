@@ -11,7 +11,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
 
     strategy:
       matrix:
@@ -25,4 +25,9 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: cp public/appConfig.example.js public/appConfig.js
       - run: npm ci
-      - run: npm run test
+      - name: Install the Twilio CLI and run tests using the Flex plugin
+        env:
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_API_KEY: ${{ secrets.TWILIO_API_KEY }}
+          TWILIO_API_SECRET: ${{secrets.TWILIO_API_SECRET}}
+        run: npm install twilio-cli -g && twilio plugins:install @twilio-labs/plugin-serverless && twilio plugins:install @twilio-labs/plugin-flex@beta && twilio flex:plugins:test
