@@ -205,7 +205,7 @@ You are all set to test chat and sms transfers on your Flex instance!
 
 ### 2.0.0
 
-**October 12, 2020**
+**November 18, 2020**
 
 - Updated plugin to use the latest Flex plugin for the Twilio CLI. 
 - Updated prerequisites and deployment instructions in the README. For more details, see [Keeping Plugins Up-to-Date](https://www.twilio.com/docs/flex/developer/plugins/updating).
