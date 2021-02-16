@@ -7,7 +7,7 @@ exports.handler = JWEValidator(async function (context, event, callback) {
 	// setup a response object
 	const response = new Twilio.Response();
 	response.appendHeader('Access-Control-Allow-Origin', '*');
-	response.appendHeader('Access-Control-Allow-Methods', 'OPTIONS POST');
+	response.appendHeader('Access-Control-Allow-Methods', 'OPTIONS, POST');
 	response.appendHeader('Content-Type', 'application/json');
 	response.appendHeader(
 		'Access-Control-Allow-Headers',
