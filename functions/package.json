@@ -10,7 +10,7 @@
     "twilio-run": "^2.0.0"
   },
   "engines": {
-    "node": "8.10.0"
+    "node": ">=12.21.0"
   },
   "dependencies": {
     "twilio-flex-token-validator": "^1.5.2"

@@ -100,13 +100,7 @@ See [Twilio Account Settings](#twilio-account-settings) to locate the necessary 
 4. Run the application.
 
 ```bash
-npm start
-```
-
-Alternatively, you can use this command to start the server in development mode. It will reload whenever you change any files.
-
-```bash
-npm run dev
+twilio flex:plugins:start
 ```
 
 5. Navigate to [http://localhost:3000](http://localhost:3000).
@@ -128,10 +122,10 @@ plugin-chat-sms-transfer $ cd functions && mv .env.sample .env
 Step 2: Open `.env` with your text editor and set the environment variables mentioned in the file.
 
 ```
-TWILIO_ACCOUNT_SID = ACaaaa
-TWILIO_AUTH_TOKEN = 93bbbb
-TWILIO_WORKSPACE_SID = WScccc
-TWILIO_CHAT_TRANSFER_WORKFLOW_SID = WWdddd
+TWILIO_ACCOUNT_SID = ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+TWILIO_AUTH_TOKEN = 9yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+TWILIO_WORKSPACE_SID = WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+TWILIO_CHAT_TRANSFER_WORKFLOW_SID = WWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ```
 
 Step 3: Deploy the Twilio function to your account using the Twilio CLI:
@@ -196,7 +190,7 @@ Run $ twilio flex:plugins:release --plugin plugin-chat-sms-transfer@2.0.0 --name
 
 After running the suggested next step with a meaningful name and description, navigate to the [Plugins Dashboard](https://flex.twilio.com/admin/) to review your recently deployed and released plugin. Confirm that the latest version is enabled for your contact center.
 
-You are all set to test chat and sms transfers on your Flex instance!
+You are all set to test Chat and SMS transfers on your Flex application!
 
 
 ---
