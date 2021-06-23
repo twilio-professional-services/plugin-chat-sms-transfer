@@ -15,7 +15,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [12.x, 14.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -30,4 +30,4 @@ jobs:
           TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
           TWILIO_API_KEY: ${{ secrets.TWILIO_API_KEY }}
           TWILIO_API_SECRET: ${{secrets.TWILIO_API_SECRET}}
-        run: npm install twilio-cli -g && twilio plugins:install @twilio-labs/plugin-serverless && twilio plugins:install @twilio-labs/plugin-flex@beta && twilio flex:plugins:test
+        run: npm install twilio-cli -g && twilio plugins:install @twilio-labs/plugin-serverless && twilio plugins:install @twilio-labs/plugin-flex && twilio flex:plugins:test
