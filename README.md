@@ -75,21 +75,17 @@ After the above requirements have been met:
 git clone git@github.com:twilio-professional-services/plugin-chat-sms-transfer.git
 ```
 
-2. Rename the example app configuration file.
 
-```
-plugin-chat-sms-transfer $ mv public/appConfig.example.js public/appConfig.js
-```
-
-3. Install dependencies.
+1. Install dependencies.
 
 ```bash
 npm install
 ```
 
-5. [Deploy your Twilio Function](#twilio-serverless-deployment).
+1. [Deploy your Twilio Function](#twilio-serverless-deployment).
 
-6. Set your environment variables.
+
+1. Set your environment variables.
 
 ```bash
 npm run setup
@@ -97,13 +93,13 @@ npm run setup
 
 See [Twilio Account Settings](#twilio-account-settings) to locate the necessary environment variables.
 
-4. Run the application.
+1. Run the application.
 
 ```bash
 twilio flex:plugins:start
 ```
 
-5. Navigate to [http://localhost:3000](http://localhost:3000).
+1. Navigate to [http://localhost:3000](http://localhost:3000).
 
 That's it!
 
@@ -139,7 +135,7 @@ Deploying functions & assets to the Twilio Runtime
 ✔ Serverless project successfully deployed
 
 Deployment Details
-Domain: chat-transfer-4876-dev.twil.io
+Domain: https://plugin-chat-sms-transfer-functions-xxxx-dev.twil.io
 Service:
    chat-transfer (ZSxxxx)
 ...
@@ -160,7 +156,7 @@ You need to modify the source file to mention the serverless domain of the funct
 - Open src/helpers/actions.js in a text editor of your choice.
 - Paste the Function deployment domain in the variable SERVERLESS_FUNCTION_DOMAIN.
   ```
-  const SERVERLESS_FUNCTION_DOMAIN = 'plugin-chat-sms-transfer-7325-dev.twil.io';
+  const SERVERLESS_FUNCTION_DOMAIN = 'https://plugin-chat-sms-transfer-functions-xxxx-dev.twil.io';
   ```
 
 When you are ready to deploy the plugin, run the following in a command shell:
