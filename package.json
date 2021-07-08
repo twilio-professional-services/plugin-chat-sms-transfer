@@ -7,27 +7,13 @@
   },
   "devDependencies": {
     "@twilio/flex-ui": "^1",
-    "babel-polyfill": "^6.26.0",
-    "enzyme": "^3.10.0",
-    "enzyme-adapter-react-16": "^1.14.0",
-    "flex-plugin-scripts": "4.0.12-beta.0"
+    "react-test-renderer": "16.5.2"
   },
   "dependencies": {
-    "flex-plugin": "4.0.2-beta.0",
+    "debug": "^4.3.1",
     "react": "16.5.2",
-    "react-dom": "16.5.2"
+    "react-dom": "16.5.2",
+    "flex-plugin-scripts": "4.0.1"
   },
-  "config-overrides-path": "node_modules/react-app-rewire-flex-plugin",
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  "config-overrides-path": "node_modules/react-app-rewire-flex-plugin"
 }

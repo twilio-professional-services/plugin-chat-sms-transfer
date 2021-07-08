@@ -27,9 +27,8 @@ To deploy this plugin, you will need:
   npm install twilio-cli -g
   # Install the Serverless and Flex as Plugins
   twilio plugins:install @twilio-labs/plugin-serverless
-  twilio plugins:install @twilio-labs/plugin-flex@beta
+  twilio plugins:install @twilio-labs/plugin-flex
   ```
-- A GitHub account
 
 ### Contributing
 
@@ -75,21 +74,17 @@ After the above requirements have been met:
 git clone git@github.com:twilio-professional-services/plugin-chat-sms-transfer.git
 ```
 
-2. Rename the example app configuration file.
 
-```
-plugin-chat-sms-transfer $ mv public/appConfig.example.js public/appConfig.js
-```
-
-3. Install dependencies.
+1. Install dependencies.
 
 ```bash
 npm install
 ```
 
-5. [Deploy your Twilio Function](#twilio-serverless-deployment).
+1. [Deploy your Twilio Function](#twilio-serverless-deployment).
 
-6. Set your environment variables.
+
+1. Set your environment variables.
 
 ```bash
 npm run setup
@@ -97,19 +92,13 @@ npm run setup
 
 See [Twilio Account Settings](#twilio-account-settings) to locate the necessary environment variables.
 
-4. Run the application.
+1. Run the application.
 
 ```bash
-npm start
+twilio flex:plugins:start
 ```
 
-Alternatively, you can use this command to start the server in development mode. It will reload whenever you change any files.
-
-```bash
-npm run dev
-```
-
-5. Navigate to [http://localhost:3000](http://localhost:3000).
+1. Navigate to [http://localhost:3000](http://localhost:3000).
 
 That's it!
 
@@ -128,10 +117,10 @@ plugin-chat-sms-transfer $ cd functions && mv .env.sample .env
 Step 2: Open `.env` with your text editor and set the environment variables mentioned in the file.
 
 ```
-TWILIO_ACCOUNT_SID = ACaaaa
-TWILIO_AUTH_TOKEN = 93bbbb
-TWILIO_WORKSPACE_SID = WScccc
-TWILIO_CHAT_TRANSFER_WORKFLOW_SID = WWdddd
+TWILIO_ACCOUNT_SID = ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+TWILIO_AUTH_TOKEN = 9yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+TWILIO_WORKSPACE_SID = WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+TWILIO_CHAT_TRANSFER_WORKFLOW_SID = WWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ```
 
 Step 3: Deploy the Twilio function to your account using the Twilio CLI:
@@ -145,7 +134,7 @@ Deploying functions & assets to the Twilio Runtime
 ✔ Serverless project successfully deployed
 
 Deployment Details
-Domain: chat-transfer-4876-dev.twil.io
+Domain: https://plugin-chat-sms-transfer-functions-xxxx-dev.twil.io
 Service:
    chat-transfer (ZSxxxx)
 ...
@@ -166,7 +155,7 @@ You need to modify the source file to mention the serverless domain of the funct
 - Open src/helpers/actions.js in a text editor of your choice.
 - Paste the Function deployment domain in the variable SERVERLESS_FUNCTION_DOMAIN.
   ```
-  const SERVERLESS_FUNCTION_DOMAIN = 'plugin-chat-sms-transfer-7325-dev.twil.io';
+  const SERVERLESS_FUNCTION_DOMAIN = 'https://plugin-chat-sms-transfer-functions-xxxx-dev.twil.io';
   ```
 
 When you are ready to deploy the plugin, run the following in a command shell:
@@ -196,7 +185,7 @@ Run $ twilio flex:plugins:release --plugin plugin-chat-sms-transfer@2.0.0 --name
 
 After running the suggested next step with a meaningful name and description, navigate to the [Plugins Dashboard](https://flex.twilio.com/admin/) to review your recently deployed and released plugin. Confirm that the latest version is enabled for your contact center.
 
-You are all set to test chat and sms transfers on your Flex instance!
+You are all set to test Chat and SMS transfers on your Flex application!
 
 
 ---

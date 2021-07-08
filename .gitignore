@@ -51,6 +51,9 @@ typings/
 # Output of 'npm pack'
 *.tgz
 
+# Output of 'twilio serverless:deploy'
+functions/.twiliodeployinfo
+
 # Yarn Integrity file
 .yarn-integrity
 
