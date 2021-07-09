@@ -67,3 +67,4 @@ functions/.twiliodeployinfo
 appConfig.js
 build/
 .twilio-functions
+.idea
