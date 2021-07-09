@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "postinstall": "flex-plugin pre-script-check"
+    "postinstall": "flex-plugin pre-script-check",
+    "lint": "eslint --ext js src/",
+    "lint:fix": "npm run lint -- --fix"
   },
   "devDependencies": {
     "@twilio/flex-ui": "^1",
+    "eslint": "^7.30.0",
+    "eslint-config-twilio": "^1.35.1",
     "react-test-renderer": "16.5.2"
   },
   "dependencies": {

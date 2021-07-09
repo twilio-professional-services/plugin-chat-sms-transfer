@@ -1,0 +1,8 @@
+{
+  "extends": [
+    "twilio"
+  ],
+  "rules": {
+    "import/no-extraneous-dependencies": "off"
+  }
+}

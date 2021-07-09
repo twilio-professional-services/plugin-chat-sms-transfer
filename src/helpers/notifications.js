@@ -9,12 +9,12 @@ import { Manager, Notifications, NotificationType } from '@twilio/flex-ui';
  * see actions.js (transferOverride function) for an example of how the notification is invoked
  */
 export const setUpNotifications = () => {
-	const manager = Manager.getInstance();
-	manager.strings.chatTransferFetchErrorTemplate = 'Failed: {{message}}';
+  const manager = Manager.getInstance();
+  manager.strings.chatTransferFetchErrorTemplate = 'Failed: {{message}}';
 
-	Notifications.registerNotification({
-		id: 'chatTransferFetchError',
-		content: 'chatTransferFetchErrorTemplate',
-		type: NotificationType.error,
-	});
+  Notifications.registerNotification({
+    id: 'chatTransferFetchError',
+    content: 'chatTransferFetchErrorTemplate',
+    type: NotificationType.error,
+  });
 };

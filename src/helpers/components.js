@@ -1,5 +1,6 @@
 import * as Flex from '@twilio/flex-ui';
 import React from 'react';
+
 import TransferButton from '../components/TransferButton';
 
 /**
@@ -9,9 +10,8 @@ import TransferButton from '../components/TransferButton';
  * and the task has been assigned.
  */
 export const setUpComponents = () => {
-	Flex.TaskCanvasHeader.Content.add(<TransferButton key="chat-transfer-button" />, {
-		sortOrder: 1,
-		if: (props) =>
-			props.channelDefinition.capabilities.has('Chat') && props.task.taskStatus === 'assigned',
-	});
+  Flex.TaskCanvasHeader.Content.add(<TransferButton key="chat-transfer-button" />, {
+    sortOrder: 1,
+    if: (props) => props.channelDefinition.capabilities.has('Chat') && props.task.taskStatus === 'assigned',
+  });
 };
