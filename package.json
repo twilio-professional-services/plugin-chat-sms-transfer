@@ -9,17 +9,16 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "debug": "^4.3.1",
-    "flex-plugin-scripts": "4.0.1",
+    "debug": "^4.3.2",
+    "flex-plugin-scripts": "4.1.0",
     "react": "16.5.2",
     "react-dom": "16.5.2"
   },
   "devDependencies": {
-    "@twilio/flex-ui": "^1",
-    "eslint": "^7.30.0",
+    "@twilio/flex-ui": "^1.27.0",
+    "eslint": "^7.31.0",
     "eslint-config-twilio": "^1.35.1",
     "husky": "^7.0.1",
     "react-test-renderer": "16.5.2"
-  },
-  "config-overrides-path": "node_modules/react-app-rewire-flex-plugin"
+  }
 }
