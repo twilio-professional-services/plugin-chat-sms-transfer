@@ -20,9 +20,9 @@ To deploy this plugin, you will need:
 
 - An active Twilio account with Flex provisioned. Refer to the [Flex Quickstart](https://www.twilio.com/docs/flex/quickstart/flex-basics#sign-up-for-or-sign-in-to-twilio-and-create-a-new-flex-project") to create one.
 - npm version 5.0.0 or later installed (type `npm -v` in your terminal to check)
-- Node.js version 10.12.0 or later installed (type `node -v` in your terminal to check)
+- Node.js version 12 or later installed (type `node -v` in your terminal to check)
 - [Twilio CLI](https://www.twilio.com/docs/twilio-cli/quickstart#install-twilio-cli) along with the [Flex CLI Plugin](https://www.twilio.com/docs/twilio-cli/plugins#available-plugins) and the [Serverless Plugin](https://www.twilio.com/docs/twilio-cli/plugins#available-plugins). Run the following commands to install them:
-  ```
+  ```bash
   # Install the Twilio CLI
   npm install twilio-cli -g
   # Install the Serverless and Flex as Plugins
@@ -70,35 +70,33 @@ After the above requirements have been met:
 
 1. Clone this repository.
 
-```
-git clone git@github.com:twilio-professional-services/plugin-chat-sms-transfer.git
-```
+    ```bash
+    git clone git@github.com:twilio-professional-services/plugin-chat-sms-transfer.git
+    ```
 
+2. Install dependencies.
 
-1. Install dependencies.
+  ```bash
+  npm install
+  ```
 
-```bash
-npm install
-```
+3. [Deploy your Twilio Function](#twilio-serverless-deployment).
 
-1. [Deploy your Twilio Function](#twilio-serverless-deployment).
+4. Set your environment variables.
 
-
-1. Set your environment variables.
-
-```bash
-npm run setup
-```
+    ```bash
+    npm run setup
+    ```
 
 See [Twilio Account Settings](#twilio-account-settings) to locate the necessary environment variables.
 
-1. Run the application.
+5. Run the application.
 
-```bash
-twilio flex:plugins:start
-```
+    ```bash
+    twilio flex:plugins:start
+    ```
 
-1. Navigate to [http://localhost:3000](http://localhost:3000).
+6. Navigate to [http://localhost:3000](http://localhost:3000).
 
 That's it!
 
@@ -108,39 +106,39 @@ You need to deploy the function associated with the Chat and SMS Transfers plugi
 
 #### Pre-deployment Steps
 
-Step 1: Change into the functions directory and rename `.env.sample`.
+1. Change into the functions directory and rename `.env.sample`.
 
-```
-plugin-chat-sms-transfer $ cd functions && mv .env.sample .env
-```
+    ```bash
+    cd functions && mv .env.sample .env
+    ```
 
-Step 2: Open `.env` with your text editor and set the environment variables mentioned in the file.
+2. Open `.env` with your text editor and set the environment variables mentioned in the file.
 
-```
-TWILIO_ACCOUNT_SID = ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-TWILIO_AUTH_TOKEN = 9yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
-TWILIO_WORKSPACE_SID = WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-TWILIO_CHAT_TRANSFER_WORKFLOW_SID = WWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-```
+    ```
+    TWILIO_ACCOUNT_SID=ACXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    TWILIO_AUTH_TOKEN=9yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
+    TWILIO_WORKSPACE_SID=WSXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    TWILIO_CHAT_TRANSFER_WORKFLOW_SID=WWXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+    ```
 
-Step 3: Deploy the Twilio function to your account using the Twilio CLI:
+3. Deploy the Twilio function to your account using the Twilio CLI:
+  
+    ```bash
+    cd functions && twilio serverless:deploy
+    
+    # Example Output
+    # Deploying functions & assets to the Twilio Runtime
+    # ⠇ Creating 1 Functions
+    # ✔ Serverless project successfully deployed
+    
+    # Deployment Details
+    # Domain: https://plugin-chat-sms-transfer-functions-xxxx-dev.twil.io
+    # Service:
+    #    chat-transfer (ZSxxxx)
+    # ..
+    ```
 
-```
-functions $ twilio serverless:deploy
-
-# Example Output
-Deploying functions & assets to the Twilio Runtime
-⠇ Creating 1 Functions
-✔ Serverless project successfully deployed
-
-Deployment Details
-Domain: https://plugin-chat-sms-transfer-functions-xxxx-dev.twil.io
-Service:
-   chat-transfer (ZSxxxx)
-...
-```
-
-Step 4: Copy and save the domain returned when you deploy a function. You will need it in the next step.
+4. Copy and save the domain returned when you deploy a function. You will need it in the next step.
 
 If you forget to copy the domain, you can also find it by navigating to [Functions > API](https://www.twilio.com/console/functions/api) in the Twilio Console.
 
@@ -160,10 +158,9 @@ You need to modify the source file to mention the serverless domain of the funct
 
 When you are ready to deploy the plugin, run the following in a command shell:
 
-```
+```bash
 twilio flex:plugins:deploy --major --changelog "Update the plugin to use Builder v4" --description "Chat and SMS Cold Transfers in Flex"
 ```
-
 
 #### Example Output
 
@@ -186,7 +183,6 @@ Run $ twilio flex:plugins:release --plugin plugin-chat-sms-transfer@2.0.0 --name
 After running the suggested next step with a meaningful name and description, navigate to the [Plugins Dashboard](https://flex.twilio.com/admin/) to review your recently deployed and released plugin. Confirm that the latest version is enabled for your contact center.
 
 You are all set to test Chat and SMS transfers on your Flex application!
-
 
 ---
 
