@@ -1,3 +1,4 @@
+/* eslint-disable camelcase, import/no-unresolved, func-names */
 const JWEValidator = require('twilio-flex-token-validator').functionValidator;
 
 exports.handler = JWEValidator(async function (context, event, callback) {
