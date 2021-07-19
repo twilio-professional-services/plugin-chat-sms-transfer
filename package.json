@@ -5,19 +5,21 @@
   "scripts": {
     "postinstall": "flex-plugin pre-script-check",
     "lint": "eslint --ext js src/ functions/functions/",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "npm run lint -- --fix",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "debug": "^4.3.1",
+    "flex-plugin-scripts": "4.0.1",
+    "react": "16.5.2",
+    "react-dom": "16.5.2"
   },
   "devDependencies": {
     "@twilio/flex-ui": "^1",
     "eslint": "^7.30.0",
     "eslint-config-twilio": "^1.35.1",
+    "husky": "^7.0.1",
     "react-test-renderer": "16.5.2"
-  },
-  "dependencies": {
-    "debug": "^4.3.1",
-    "react": "16.5.2",
-    "react-dom": "16.5.2",
-    "flex-plugin-scripts": "4.0.1"
   },
   "config-overrides-path": "node_modules/react-app-rewire-flex-plugin"
 }
