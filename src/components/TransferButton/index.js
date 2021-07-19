@@ -17,4 +17,4 @@ export class TransferButtonComponent extends React.PureComponent {
   }
 }
 
-export default withTheme(TransferButton);
+export default withTheme(TransferButtonComponent);
