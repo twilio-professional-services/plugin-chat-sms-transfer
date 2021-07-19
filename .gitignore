@@ -66,5 +66,4 @@ functions/.twiliodeployinfo
 # Flex related ignore
 appConfig.js
 build/
-.twilio-functions
 .idea
