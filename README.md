@@ -106,10 +106,10 @@ You need to deploy the function associated with the Chat and SMS Transfers plugi
 
 #### Pre-deployment Steps
 
-1. Change into the functions directory and rename `.env.sample`.
+1. Change into the functions directory and rename `.env.example`.
 
     ```bash
-    cd functions && mv .env.sample .env
+    cd functions && cp .env.example .env
     ```
 
 2. Open `.env` with your text editor and set the environment variables mentioned in the file.
@@ -150,17 +150,22 @@ Once you have deployed the function, it is time to deploy the plugin to your Fle
 
 You need to modify the source file to mention the serverless domain of the function that you deployed previously.
 
-- Open src/helpers/actions.js in a text editor of your choice.
-- Paste the Function deployment domain in the variable SERVERLESS_FUNCTION_DOMAIN.
-  ```
-  const SERVERLESS_FUNCTION_DOMAIN = 'https://plugin-chat-sms-transfer-functions-xxxx-dev.twil.io';
-  ```
+1. In the main directory rename `.env.example`.
 
-When you are ready to deploy the plugin, run the following in a command shell:
+    ```bash
+    cp .env.example .env
+    ```
+2. Open `.env` with your text editor and set the environment variables mentioned in the file.
 
-```bash
-twilio flex:plugins:deploy --major --changelog "Update the plugin to use Builder v4" --description "Chat and SMS Cold Transfers in Flex"
-```
+    ```
+    # Paste the Function deployment domain
+    SERVERLESS_FUNCTION_DOMAIN='https://plugin-chat-sms-transfer-functions-xxxx-dev.twil.io';
+    ```
+3. When you are ready to deploy the plugin, run the following in a command shell:
+
+    ```bash
+    twilio flex:plugins:deploy --major --changelog "Update the plugin to use Builder v4" --description "Chat and SMS Cold Transfers in Flex"
+    ```
 
 #### Example Output
 
@@ -199,7 +204,7 @@ You are all set to test Chat and SMS transfers on your Flex application!
 
 **September 25, 2020**
 
-- Added full test suite and github actions. Updated readme with instructions on how to run tests.
+- Added full test suite and GitHub actions. Updated readme with instructions on how to run tests.
 
 ### 2.0.0
 

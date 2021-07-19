@@ -2,7 +2,6 @@ import { Actions, TaskHelper, Manager, Notifications, StateHelper } from '@twili
 import fetch from 'node-fetch';
 
 // Once you publish the chat transfer function, place the returned domain in your version of the plugin.
-const SERVERLESS_FUNCTION_DOMAIN = '';
 
 /**
  * This is the function we replaced Flex's default TransferTask action with.
@@ -41,7 +40,7 @@ export const transferOverride = async (payload, original) => {
   };
 
   // initiate the transfer
-  return fetch(`${SERVERLESS_FUNCTION_DOMAIN}/transfer-chat`, {
+  return fetch(`${process.env.SERVERLESS_FUNCTION_DOMAIN}/transfer-chat`, {
     headers: {
       'Content-Type': 'application/json',
     },

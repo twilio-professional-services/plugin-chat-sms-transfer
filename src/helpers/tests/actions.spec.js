@@ -103,6 +103,7 @@ describe('actions', () => {
       // mock fetch to return a valid value
       fetch.mockImplementation(() => Promise.resolve(new Response()));
 
+      process.env.SERVERLESS_FUNCTION_DOMAIN = '';
       await transferOverride(payload, original);
       expect(leaveFn).toHaveBeenCalled();
       expect(joinFn).not.toHaveBeenCalled();
