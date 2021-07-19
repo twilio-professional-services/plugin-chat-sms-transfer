@@ -2,6 +2,7 @@
   "name": "plugin-chat-sms-transfer",
   "version": "1.0.0",
   "private": true,
+  "description": "The Chat and SMS Transfers for Flex plugin helps contact center administrators set up transferring of Chats and SMS between Agents.",
   "scripts": {
     "postinstall": "flex-plugin pre-script-check",
     "lint": "eslint --ext js src/ functions/functions/",
