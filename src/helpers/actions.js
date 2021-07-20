@@ -2,7 +2,6 @@ import { Actions, TaskHelper, Manager, Notifications, StateHelper } from '@twili
 import fetch from 'node-fetch';
 
 // Once you publish the chat transfer function, place the returned domain in your version of the plugin.
-const SERVERLESS_FUNCTION_DOMAIN = '';
 
 /**
  * This is the function we replaced Flex's default TransferTask action with.
@@ -25,7 +24,7 @@ export const transferOverride = async (payload, original) => {
    */
   const channel = StateHelper.getChatChannelStateForTask(payload.task);
   if (channel) {
-    channel.source.leave();
+    await channel.source.leave();
   }
 
   /*
@@ -41,13 +40,13 @@ export const transferOverride = async (payload, original) => {
   };
 
   // initiate the transfer
-  return fetch(`${SERVERLESS_FUNCTION_DOMAIN}/transfer-chat`, {
+  return fetch(`${process.env.SERVERLESS_FUNCTION_DOMAIN}/transfer-chat`, {
     headers: {
       'Content-Type': 'application/json',
     },
     method: 'POST',
     body: JSON.stringify(body),
-  }).catch((e) => {
+  }).catch(async (e) => {
     /*
      * see src/helpers/notifications.js for how this custom notification is registered.
      * if for some reason the request to transfer fails, show it to the agent
@@ -59,7 +58,7 @@ export const transferOverride = async (payload, original) => {
      * the customer with no one in the chat channel.
      */
     if (channel) {
-      channel.source.join();
+      await channel.source.join();
     }
   });
 };

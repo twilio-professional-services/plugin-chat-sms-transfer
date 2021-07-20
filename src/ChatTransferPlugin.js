@@ -1,8 +1,6 @@
 import { FlexPlugin } from 'flex-plugin';
 
-import { setUpActions } from './helpers/actions';
-import { setUpComponents } from './helpers/components';
-import { setUpNotifications } from './helpers/notifications';
+import { setUpActions, setUpComponents, setUpNotifications } from './helpers';
 
 const PLUGIN_NAME = 'ChatTransferPlugin';
 
