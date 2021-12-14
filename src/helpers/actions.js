@@ -40,7 +40,7 @@ export const transferOverride = async (payload, original) => {
   };
 
   // initiate the transfer
-  return fetch(`${process.env.SERVERLESS_FUNCTION_DOMAIN}/transfer-chat`, {
+  return fetch(`${process.env.REACT_APP_SERVERLESS_FUNCTION_DOMAIN}/transfer-chat`, {
     headers: {
       'Content-Type': 'application/json',
     },
