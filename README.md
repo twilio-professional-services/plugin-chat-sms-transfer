@@ -159,7 +159,7 @@ You need to modify the source file to mention the serverless domain of the funct
 
     ```
     # Paste the Function deployment domain
-    SERVERLESS_FUNCTION_DOMAIN='https://plugin-chat-sms-transfer-functions-xxxx-dev.twil.io';
+    REACT_APP_SERVERLESS_FUNCTION_DOMAIN='https://plugin-chat-sms-transfer-functions-xxxx-dev.twil.io';
     ```
 3. When you are ready to deploy the plugin, run the following in a command shell:
 
