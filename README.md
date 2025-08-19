@@ -1,12 +1,10 @@
-<a  href="https://www.twilio.com">
-<img  src="https://static0.twilio.com/marketing/bundles/marketing/img/logos/wordmark-red.svg"  alt="Twilio"  width="250"  />
-</a>
+# Notice - Legacy Code
+
+**This plugin is no longer maintained and should not be used in new deployments, as [Programmable Chat has been deprecated in favor of Twilio Conversations](https://www.twilio.com/docs/conversations/migrating-chat-conversations).**
 
 # Chat and SMS Transfers for Flex
 
 The Chat and SMS Transfers for Flex plugin helps contact center administrators set up transferring of Chats and SMS between Agents.
-
-**As of the writing of this document, Flex does not natively support transferring of non-voice tasks. To track the addition of Chat and SMS transfers as a feature, visit the [Flex Release Notes](https://www.twilio.com/docs/flex/release-notes) page.**
 
 **Note if you have deployed this plugin between March 26 and August 11, 2020:** We recently made a fix that cleans up the channels of your agents when they perform a chat or SMS transfer. This will ensure that your agents don’t hit the limit of the channels they can join. We recommend installing the latest version of the plugin in order to get this change. See [Plugin Deployment instructions](#) to redeploy the plugin and [GitHub Issue #21](https://github.com/twilio-professional-services/plugin-chat-sms-transfer/issues/21) for more details on the bug.
 
